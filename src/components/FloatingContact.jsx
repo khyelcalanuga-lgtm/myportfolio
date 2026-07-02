@@ -82,7 +82,7 @@ const FloatingContact = () => {
       <div className="morph-panel">
         <div className="morph-top" onClick={open ? undefined : () => setOpen(true)}>
           <div className="morph-top-left">
-             <div className="chat-avatar" style={{ backgroundImage: `url(${avatarImg})` }} />
+             <img className="chat-avatar" src={avatarImg} alt="" />
             <div>
               <div className="chat-head-name">Khyel Calanuga</div>
               <div className="chat-head-status">Online</div>

@@ -111,9 +111,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  object-fit: cover;
   flex-shrink: 0;
 }
 
