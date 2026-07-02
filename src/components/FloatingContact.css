@@ -111,7 +111,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FBF4D0, #d4c89a);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   flex-shrink: 0;
 }
 

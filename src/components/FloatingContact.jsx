@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import './FloatingContact.css'
+import avatarImg from '../assets/IMG_7986 (1).png'
 
 const ChatIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,7 +82,7 @@ const FloatingContact = () => {
       <div className="morph-panel">
         <div className="morph-top" onClick={open ? undefined : () => setOpen(true)}>
           <div className="morph-top-left">
-            <div className="chat-avatar" />
+             <div className="chat-avatar" style={{ backgroundImage: `url(${avatarImg})` }} />
             <div>
               <div className="chat-head-name">Khyel Calanuga</div>
               <div className="chat-head-status">Online</div>
