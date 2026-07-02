@@ -1,7 +1,6 @@
 import { readFileSync, readdirSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { GoogleGenerativeAI } from '@google/generative-ai'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -40,17 +39,34 @@ If the answer cannot be found in the provided knowledge, reply exactly:
 ${knowledge}`
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash-lite',
-      systemInstruction: SYSTEM_PROMPT,
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: message },
+        ],
+        max_tokens: 500,
+        temperature: 0.3,
+      }),
     })
 
-    const result = await model.generateContent(message)
-    const reply = result.response.text().trim()
+    if (!response.ok) {
+      const errText = await response.text()
+      console.error('Groq error:', response.status, errText)
+      return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
+    }
+
+    const data = await response.json()
+    const reply = data.choices?.[0]?.message?.content?.trim()
     res.status(200).json({ reply: reply || "I don't have that information yet." })
   } catch (err) {
     console.error('Chat API error:', err)
-    res.status(502).json({ reply: "Sorry, I'm temporarily unavailable.", debug: err.message })
+    res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
   }
 }
