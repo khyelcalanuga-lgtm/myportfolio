@@ -27,6 +27,49 @@ const initialMessages = [
   { id: 2, text: 'Feel free to ask me anything or just say hello!', sender: 'bot' },
 ]
 
+const portfolioImages = Object.entries(
+  import.meta.glob('../assets/**/*.{png,webp}', { eager: true, import: 'default' })
+)
+  .filter(([path]) => /\/(3dRenderss|graphicdesigns|illustration)\//.test(path))
+  .map(([path, src]) => ({ path, src }))
+
+const getSuggestedImages = (message) => {
+  const text = message.toLowerCase()
+  const wantsVisuals = /\b(image|images|picture|pictures|visual|visuals|artwork|portfolio|show|display|preview|examples|work|see)\b/.test(text)
+
+  if (!wantsVisuals) return []
+
+  const folderBias = /\b(3d|render|renders|rendered)\b/.test(text)
+    ? '3dRenderss'
+    : /\b(graphic|design|poster|branding|brand)\b/.test(text)
+      ? 'graphicdesigns'
+      : /\b(illustration|illustrations|illustrator)\b/.test(text)
+        ? 'illustration'
+        : null
+
+  const candidatePool = folderBias
+    ? portfolioImages.filter((item) => item.path.includes(`/${folderBias}/`))
+    : portfolioImages
+
+  const keywords = text
+    .split(/[^a-z0-9]+/)
+    .filter((word) => word.length > 2 && !['show', 'me', 'the', 'my', 'some', 'for', 'and', 'with', 'from', 'your', 'portfolio', 'image', 'images', 'picture', 'pictures', 'visual', 'visuals', 'artwork', 'work', 'examples', 'preview', 'see', 'please', 'about', 'what', 'when', 'want'].includes(word))
+
+  const scored = candidatePool
+    .map((item) => {
+      const name = item.path.toLowerCase()
+      let score = folderBias ? 2 : 0
+      keywords.forEach((keyword) => {
+        if (name.includes(keyword)) score += 3
+      })
+      return { ...item, score }
+    })
+    .sort((a, b) => b.score - a.score)
+
+  const selected = scored.filter((item) => item.score > 0)
+  return (selected.length ? selected : scored).slice(0, 3).map((item) => item.src)
+}
+
 const FloatingContact = () => {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState(initialMessages)
@@ -69,7 +112,10 @@ const FloatingContact = () => {
         body: JSON.stringify({ message: text }),
       })
       const data = await res.json()
-      setMessages(prev => [...prev, { id: Date.now() + 1, text: data.reply, sender: 'bot' }])
+      const images = Array.isArray(data.images) && data.images.length > 0
+        ? data.images
+        : getSuggestedImages(text)
+      setMessages(prev => [...prev, { id: Date.now() + 1, text: data.reply, sender: 'bot', images }])
     } catch {
       setMessages(prev => [...prev, { id: Date.now() + 1, text: "Sorry, I'm temporarily unavailable.", sender: 'bot' }])
     } finally {
@@ -82,7 +128,7 @@ const FloatingContact = () => {
       <div className="morph-panel">
         <div className="morph-top" onClick={open ? undefined : () => setOpen(true)}>
           <div className="morph-top-left">
-             <img className="chat-avatar" src={avatarImg} alt="" />
+            <img className="chat-avatar" src={avatarImg} alt="" />
             <div>
               <div className="chat-head-name">Khyel Calanuga</div>
               <div className="chat-head-status">Online</div>
@@ -100,7 +146,16 @@ const FloatingContact = () => {
           <div className="chat-msgs">
             {messages.map(msg => (
               <div key={msg.id} className={`chat-msg ${msg.sender}`}>
-                <div className="chat-bubble">{msg.text}</div>
+                <div className="chat-bubble">
+                  {msg.text}
+                  {msg.images?.length > 0 && (
+                    <div className="chat-image-grid">
+                      {msg.images.map((img, index) => (
+                        <img key={`${msg.id}-${index}`} className="chat-image" src={img} alt="Portfolio preview" />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
             {typing && (
