@@ -51,6 +51,6 @@ ${knowledge}`
     res.status(200).json({ reply: reply || "I don't have that information yet." })
   } catch (err) {
     console.error('Chat API error:', err)
-    res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
+    res.status(502).json({ reply: "Sorry, I'm temporarily unavailable.", debug: err.message })
   }
 }
