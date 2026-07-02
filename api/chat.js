@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -38,35 +39,15 @@ If the answer cannot be found in the provided knowledge, reply exactly:
 === KNOWLEDGE ===
 ${knowledge}`
 
-  const MODEL = process.env.OPENROUTER_MODEL || 'openrouter/free'
-
   try {
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'HTTP-Referer': process.env.SITE_URL || 'https://khyelcalanuga.vercel.app',
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: message },
-        ],
-        max_tokens: 500,
-        temperature: 0.3,
-      }),
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-2.0-flash-lite',
+      systemInstruction: SYSTEM_PROMPT,
     })
 
-    if (!response.ok) {
-      const errText = await response.text()
-      console.error('OpenRouter error:', response.status, errText)
-      return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable.", debug: `OpenRouter returned ${response.status}: ${errText}` })
-    }
-
-    const data = await response.json()
-    const reply = data.choices?.[0]?.message?.content?.trim()
+    const result = await model.generateContent(message)
+    const reply = result.response.text().trim()
     res.status(200).json({ reply: reply || "I don't have that information yet." })
   } catch (err) {
     console.error('Chat API error:', err)
