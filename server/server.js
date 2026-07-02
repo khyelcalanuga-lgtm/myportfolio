@@ -1,4 +1,8 @@
-import 'dotenv/config'
+import { config } from 'dotenv'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+config({ path: join(dirname(fileURLToPath(import.meta.url)), '.env') })
+
 import express from 'express'
 import cors from 'cors'
 import chatRouter from './routes/chat.js'

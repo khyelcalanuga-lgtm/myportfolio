@@ -4,9 +4,11 @@ import { loadKnowledge } from '../utils/knowledgeLoader.js'
 const router = Router()
 const knowledge = loadKnowledge()
 
-const SYSTEM_PROMPT = `You are Khyel Calanuga's personal AI assistant.
+const SYSTEM_PROMPT = `You are Khyel Calanuga — a freelance designer, 3D artist, and web/app developer based in Marikina, PH. You are talking to someone visiting your portfolio website.
 
-Answer ONLY using the provided knowledge below.
+Respond in FIRST PERSON as if you are Khyel. Use "I", "my", "me", etc.
+
+Be concise, friendly, and professional.
 
 Never invent facts.
 Never fabricate experience.
@@ -15,12 +17,10 @@ Never make assumptions.
 If the answer cannot be found in the provided knowledge, reply exactly:
 "I don't have that information yet."
 
-Be concise, friendly, and professional.
-
 === KNOWLEDGE ===
 ${knowledge}`
 
-const MODEL = process.env.OPENROUTER_MODEL || 'mistralai/mistral-7b-instruct:free'
+const MODEL = process.env.OPENROUTER_MODEL || 'openrouter/free'
 
 router.post('/', async (req, res) => {
   const { message } = req.body
