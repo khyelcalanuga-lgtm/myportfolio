@@ -32,6 +32,15 @@ const portfolioImages = Object.entries(
 )
   .filter(([path]) => /\/(3dRenderss|graphicdesigns|illustration)\//.test(path))
   .map(([path, src]) => ({ path, src }))
+  .reduce((acc, item) => {
+    const key = item.path.replace(/\.(png|webp)$/i, '')
+    const existing = acc.get(key)
+    if (!existing || item.path.toLowerCase().endsWith('.webp')) {
+      acc.set(key, item)
+    }
+    return acc
+  }, new Map())
+  .values()
 
 const getSuggestedImages = (message) => {
   const text = message.toLowerCase()
@@ -67,7 +76,8 @@ const getSuggestedImages = (message) => {
     .sort((a, b) => b.score - a.score)
 
   const selected = scored.filter((item) => item.score > 0)
-  return (selected.length ? selected : scored).slice(0, 3).map((item) => item.src)
+  const bestMatch = (selected.length ? selected : scored)[0]
+  return bestMatch ? [bestMatch.src] : []
 }
 
 const FloatingContact = () => {
@@ -148,11 +158,9 @@ const FloatingContact = () => {
               <div key={msg.id} className={`chat-msg ${msg.sender}`}>
                 <div className="chat-bubble">
                   {msg.text}
-                  {msg.images?.length > 0 && (
+                  {msg.images?.[0] && (
                     <div className="chat-image-grid">
-                      {msg.images.map((img, index) => (
-                        <img key={`${msg.id}-${index}`} className="chat-image" src={img} alt="Portfolio preview" />
-                      ))}
+                      <img className="chat-image" src={msg.images[0]} alt="Portfolio preview" />
                     </div>
                   )}
                 </div>

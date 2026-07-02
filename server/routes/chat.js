@@ -7,19 +7,13 @@ import { fileURLToPath } from 'url'
 const router = Router()
 const knowledge = loadKnowledge()
 const assetsDir = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'src', 'assets')
-const portfolioImages = readdirSync(join(assetsDir, '3dRenderss'))
+const portfolioImages = [
+  ...readdirSync(join(assetsDir, '3dRenderss')),
+  ...readdirSync(join(assetsDir, 'graphicdesigns')),
+  ...readdirSync(join(assetsDir, 'illustration')),
+]
   .filter((file) => /\.(png|webp)$/i.test(file))
-  .map((file) => `/src/assets/3dRenderss/${file}`)
-  .concat(
-    readdirSync(join(assetsDir, 'graphicdesigns'))
-      .filter((file) => /\.(png|webp)$/i.test(file))
-      .map((file) => `/src/assets/graphicdesigns/${file}`),
-  )
-  .concat(
-    readdirSync(join(assetsDir, 'illustration'))
-      .filter((file) => /\.(png|webp)$/i.test(file))
-      .map((file) => `/src/assets/illustration/${file}`),
-  )
+  .map((file) => `/src/assets/${file}`)
 
 const getSuggestedImages = (message) => {
   const text = message.toLowerCase()
@@ -55,7 +49,8 @@ const getSuggestedImages = (message) => {
     .sort((a, b) => b.score - a.score)
 
   const selected = scored.filter((item) => item.score > 0)
-  return (selected.length ? selected : scored).slice(0, 3).map((item) => item.img)
+  const bestMatch = (selected.length ? selected : scored)[0]
+  return bestMatch ? [bestMatch.img] : []
 }
 
 const SYSTEM_PROMPT = `You are Khyel Calanuga — a freelance designer, 3D artist, and web/app developer based in Marikina, PH. You are talking to someone visiting your portfolio website.
