@@ -62,7 +62,7 @@ ${knowledge}`
     if (!response.ok) {
       const errText = await response.text()
       console.error('OpenRouter error:', response.status, errText)
-      return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
+      return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable.", debug: `OpenRouter returned ${response.status}` })
     }
 
     const data = await response.json()
