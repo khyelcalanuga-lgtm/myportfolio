@@ -1,0 +1,23 @@
+body {
+    color: #ffffff;
+    background-color: #202020;
+    --page-gutter: 260px;
+    --page-top: 20px;
+    overflow-x: hidden;
+}
+
+#root {
+    width: 100%;
+}
+
+.app {
+    min-height: 100vh;
+    padding: 0;
+}
+
+@media (max-width: 1024px) {
+    body {
+        --page-gutter: 12px;
+        --page-top: 12px;
+    }
+}

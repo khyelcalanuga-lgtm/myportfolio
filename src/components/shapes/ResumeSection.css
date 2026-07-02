@@ -1,0 +1,247 @@
+.resume-section {
+    width: 100%;
+    padding: 84px 280px 84px 280px;
+    background: #202020;
+    font-family: 'Syne', sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.resume-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+}
+
+.section-label {
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    color: #FBF4D0;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.name-heading {
+    font-size: 64px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1.05;
+    margin: 0 0 28px 0;
+    letter-spacing: -0.03em;
+}
+
+.about-text p {
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0 0 16px 0;
+    max-width: 380px;
+}
+
+.about-text p:last-child {
+    margin-bottom: 0;
+}
+
+.download-cv-btn {
+    margin-top: 37px;
+    background-color: #1C1C1C;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 227px;
+    height: 75px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    text-decoration: none;
+}
+
+.download-cv-btn:hover {
+    border-color: #FBF4D0;
+}
+
+.experience-block {
+    margin-top: 60px;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+}
+
+.timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.timeline-item:first-child {
+    padding-top: 0;
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.timeline-date {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.timeline-right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.timeline-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.timeline-company {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 100;
+}
+
+.timeline-desc {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 4px 0 0 0;
+    line-height: 1.5;
+    font-family: poppins;
+    font-style: italic;
+}
+
+.skills-block {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.skill-category-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    letter-spacing: 1.5px;
+    margin: 0 0 14px 0;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 8px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    transition: opacity 0.3s ease, border-color 0.3s ease;
+    cursor: default;
+}
+
+.skill-tag:hover {
+    border-color: #FBF4D0;
+}
+
+.info-card {
+    margin-top: 48px;
+    padding: 32px 32px;
+    border: 1px solid rgba(251, 244, 208, 0.25);
+    border-radius: 50px;
+}
+
+.info-card p {
+    font-size: 20px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, );
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .section-label {
+        font-size: 14px;
+    }
+
+    .resume-section {
+        padding: 56px 30px;
+    }
+
+    .resume-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .name-heading {
+        font-size: 28px;
+    }
+
+    .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .about-text p {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .download-cv-btn {
+        width: 135px;
+        height: 45px;
+        font-size: 14px;
+        margin-top: 37px;
+    }
+
+    .skill-tag {
+        font-size: 15px;
+        height: 36px;
+        padding: 0 18px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .timeline-date {
+        font-size: 12px;
+    }
+
+    .timeline-title {
+        font-size: 15px;
+    }
+
+    .timeline-company {
+        font-size: 12px;
+    }
+
+    .timeline-desc {
+        font-size: 12px;
+    }
+
+    .skill-category-title {
+        font-size: 12px;
+    }
+
+    .info-card p {
+        font-size: 13px;
+    }
+}

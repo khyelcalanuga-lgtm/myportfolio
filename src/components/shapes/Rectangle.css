@@ -1,0 +1,77 @@
+.rectangle {
+  justify-content: space-around;
+  display: flex;
+  margin-top: 137px;
+  width: 100%;
+  height: 225px;
+  background-color: #4d4d4d80;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+
+  backdrop-filter: blur(10px);
+}
+
+.rectangle .section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+}
+
+.rectangle .section:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.rectangle .section .tittle {
+  font-family: 'poppins';
+  font-size: 64px;
+  color: #FBF4D0;
+}
+
+.rectangle .section .description {
+  font-family: 'syne';
+  font-size: 20px;
+  color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .rectangle {
+    flex-direction: column;
+    height: auto;
+    margin-top: 48px;
+    padding: 30px 30px;
+    gap: 12px;
+    border-radius: 50px;
+  }
+
+  .rectangle .section:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 32px;
+  }
+
+  .rectangle .section:not(:last-child)::after {
+    display: none;
+  }
+
+  .rectangle .section .tittle {
+    font-size: 32px;
+    padding-top: 15px;
+  }
+
+  .rectangle .section .description {
+    padding-top: 5px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.5;
+    font-weight: 100;
+  }
+}
