@@ -87,13 +87,12 @@
   text-decoration: none;
   color: #9b9b9b;
   font-size: 20px;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  transition: border-color 0.25s ease;
   width: 70%;
   box-sizing: border-box;
 }
 
 .contact-link:hover {
-  background: rgba(255, 255, 255, 0.06);
   border-color: #FBF4D0;
 }
 
