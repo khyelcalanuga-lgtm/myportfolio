@@ -258,10 +258,14 @@ const Portfoliocards = () => {
         ? projects.filter(p => p.category === activeCategory)
         : projects
 
-    useLayoutEffect(() => {
-        if (!paginationRef.current || !isMobile) return
-        const active = paginationRef.current.querySelector('.pagination-btn.active')
+    // update indicator position/size based on the active button
+    const updateIndicator = () => {
+        const root = paginationRef.current
+        if (!root || !isMobile) return
+        const active = root.querySelector('.pagination-btn.active')
         if (active) {
+            const rect = active.getBoundingClientRect()
+            const parentRect = root.getBoundingClientRect()
             setIndicatorStyle({
                 opacity: 1,
                 left: `${active.offsetLeft}px`,
@@ -269,8 +273,30 @@ const Portfoliocards = () => {
                 width: `${active.offsetWidth}px`,
                 height: `${active.offsetHeight}px`
             })
+        } else {
+            setIndicatorStyle(prev => ({ ...prev, opacity: 0 }))
         }
+    }
+
+    useLayoutEffect(() => {
+        updateIndicator()
+        // ensure update runs after DOM updates
+        const id = requestAnimationFrame(() => updateIndicator())
+        return () => cancelAnimationFrame(id)
     }, [currentPage, isMobile, filteredProjects.length])
+
+    // observe size changes in the pagination container so indicator can reposition
+    useEffect(() => {
+        if (!paginationRef.current) return
+        const root = paginationRef.current
+        const ro = new ResizeObserver(() => updateIndicator())
+        ro.observe(root)
+        window.addEventListener('resize', updateIndicator)
+        return () => {
+            ro.disconnect()
+            window.removeEventListener('resize', updateIndicator)
+        }
+    }, [isMobile])
 
     const totalPages = Math.ceil(filteredProjects.length / itemsPerPage)
     const startIndex = (currentPage - 1) * itemsPerPage
@@ -316,7 +342,7 @@ const Portfoliocards = () => {
                             {project.images
                                 ? <img src={project.images[0]} alt={project.title} className="card-img" loading="lazy" />
                                 : project.image && <img src={project.image} alt={project.title} className="card-img" loading="lazy"
-                                     style={project.id === 31 ? { objectPosition: 'left' } : undefined} />
+                                    style={project.id === 31 ? { objectPosition: 'left' } : undefined} />
                             }
                             <span className="card-category-badge">{project.badge || project.category}</span>
                             <div className="card-content">
