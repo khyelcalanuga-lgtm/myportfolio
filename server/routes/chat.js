@@ -84,35 +84,63 @@ router.post('/', async (req, res) => {
       return res.status(500).json({ reply: "Server not configured: missing API key." })
     }
 
-    const model = process.env.OPENROUTER_MODEL || 'qwen/qwen3-coder:free'
+    const models = [
+      process.env.OPENROUTER_MODEL || 'openai/gpt-oss-120b:free',
+      'nousresearch/hermes-3-llama-3.1-405b:free',
+    ]
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: message },
-        ],
-        max_tokens: 500,
-        temperature: 0.3,
-      }),
-    })
+    const siteUrl = process.env.SITE_URL || 'http://localhost:5173'
 
-    if (!response.ok) {
-      const errText = await response.text()
-      console.error('OpenRouter error:', response.status, errText)
-      return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
+    let lastError = null
+    for (const model of models) {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+            'HTTP-Referer': siteUrl,
+            'X-Title': 'Khyel Portfolio Chat',
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              { role: 'system', content: SYSTEM_PROMPT },
+              { role: 'user', content: message },
+            ],
+            max_tokens: 500,
+            temperature: 0.3,
+          }),
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          const reply = data?.choices?.[0]?.message?.content?.trim() || "I don't have that information yet."
+          const images = getSuggestedImages(message)
+          return res.json({ reply, images })
+        }
+
+        lastError = await response.text()
+
+        if (response.status === 429) {
+          let wait = 3
+          try {
+            const errJson = JSON.parse(lastError)
+            wait = (errJson?.error?.metadata?.retry_after_seconds_raw || 3) + 1
+          } catch {}
+          console.error(`Rate limited on ${model}, retrying in ${wait}s...`)
+          await new Promise(r => setTimeout(r, wait * 1000))
+          continue
+        }
+
+        if (response.status === 402 || response.status === 401) {
+          break
+        }
+      }
     }
 
-    const data = await response.json()
-    const reply = data?.choices?.[0]?.message?.content?.trim() || "I don't have that information yet."
-    const images = getSuggestedImages(message)
-    res.json({ reply, images })
+    console.error('OpenRouter error:', lastError)
+    return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
   } catch (err) {
     console.error('Chat API error:', err)
     res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
