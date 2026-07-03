@@ -52,8 +52,22 @@ body {
   transform: scale(1);
 }
 
-[data-reveal-delay="100"] { transition-delay: 0.1s; }
-[data-reveal-delay="200"] { transition-delay: 0.2s; }
-[data-reveal-delay="300"] { transition-delay: 0.3s; }
-[data-reveal-delay="400"] { transition-delay: 0.4s; }
-[data-reveal-delay="500"] { transition-delay: 0.5s; }
+[data-reveal-delay="100"] {
+  transition-delay: 0.1s;
+}
+
+[data-reveal-delay="200"] {
+  transition-delay: 0.2s;
+}
+
+[data-reveal-delay="300"] {
+  transition-delay: 0.3s;
+}
+
+[data-reveal-delay="400"] {
+  transition-delay: 0.4s;
+}
+
+[data-reveal-delay="500"] {
+  transition-delay: 0.5s;
+}
