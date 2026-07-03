@@ -327,6 +327,35 @@
   }
 }
 
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 22px 12px;
+}
+
+.chat-suggestion {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.chat-suggestion:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.chat-suggestion:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .chat-input-row {
   display: flex;
   align-items: center;

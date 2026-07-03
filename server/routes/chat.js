@@ -15,11 +15,59 @@ const portfolioImages = [
   .filter((file) => /\.(png|webp)$/i.test(file))
   .map((file) => `/src/assets/${file}`)
 
+const portfolioItems = [
+  { title: 'Bugatti', path: 'Bugatti.webp', aliases: ['bugatti', 'car', 'product render', 'blender', '3d'] },
+  { title: 'Terre D\'Hermes', path: 'Terre D\'Hermes.webp', aliases: ['hermes', 'product render', 'blender', '3d'] },
+  { title: 'Khyel', path: 'Khyel.webp', aliases: ['khyel', '3d render', 'character render'] },
+  { title: 'Cup', path: 'Cup.webp', aliases: ['cup', 'product render', '3d'] },
+  { title: 'Room', path: 'Room.webp', aliases: ['room', 'interior render', '3d'] },
+  { title: 'Fight Club', path: 'FightClub.webp', aliases: ['fight club', 'poster', 'graphic design'] },
+  { title: 'Moon Knight', path: 'MoonKnight.webp', aliases: ['moon knight', 'poster', 'graphic design'] },
+  { title: 'Noah Schnapp Poster', path: 'NoahSchnappPoster.webp', aliases: ['noah schnapp', 'poster', 'graphic design'] },
+  { title: 'Clairo', path: 'clairo.webp', aliases: ['clairo', 'illustration', 'digital art'] },
+  { title: 'Random 1', path: 'rndm.webp', aliases: ['random', 'illustration', 'digital art'] },
+]
+
+const recommendedPortfolio = [
+  'Bugatti.webp',
+  'FightClub.webp',
+  'clairo.webp',
+]
+
+const isPortfolioQuery = (text) => /\b(best work|portfolio|portfolio pieces|my work|projects|examples|show.*work|show.*portfolio|what have you done)\b/.test(text)
+const isWhichQuery = (text) => /\b(which one|which project|which design|what should i choose|which should i|which should i choose)\b/.test(text)
+
+const findMatchingPortfolioItem = (message) => {
+  const text = message.toLowerCase()
+  const scores = portfolioItems.map((item) => {
+    let score = 0
+    const title = item.title.toLowerCase()
+    item.aliases.forEach((alias) => {
+      if (text.includes(alias)) score += 5
+    })
+    if (text.includes(title)) score += 6
+    const words = text.split(/[^a-z0-9]+/).filter(Boolean)
+    words.forEach((word) => {
+      if (title.includes(word) || item.aliases.some((alias) => alias.includes(word))) score += 1
+    })
+    return { item, score }
+  }).sort((a, b) => b.score - a.score)
+  return scores[0]?.score > 0 ? scores[0].item : null
+}
+
 const getSuggestedImages = (message) => {
   const text = message.toLowerCase()
   const wantsVisuals = /\b(image|images|picture|pictures|visual|visuals|artwork|portfolio|show|display|preview|examples|work|see)\b/.test(text)
+  if (!wantsVisuals && !isWhichQuery(text)) return []
 
-  if (!wantsVisuals) return []
+  const specificItem = findMatchingPortfolioItem(text)
+  if (specificItem && isWhichQuery(text)) {
+    return [specificItem.path]
+  }
+
+  if (isPortfolioQuery(text) || isWhichQuery(text)) {
+    return specificItem ? [specificItem.path] : recommendedPortfolio
+  }
 
   const folderBias = /\b(3d|render|renders|rendered)\b/.test(text)
     ? '3dRenderss'
@@ -56,6 +104,8 @@ const getSuggestedImages = (message) => {
 const SYSTEM_PROMPT = `You are Khyel Calanuga — a freelance designer, 3D artist, and web/app developer based in Marikina, PH. You are talking to someone visiting your portfolio website.
 
 Respond in FIRST PERSON as if you are Khyel. Use "I", "my", "me", etc.
+
+If the visitor asks to see your work, mention a few portfolio pieces and describe what makes them strong. If they ask which one to choose, recommend a specific project by name.
 
 Answer in 1-2 short sentences. Direct, no fluff, no greetings. Just answer what was asked. No markdown or asterisks. Use plain text only.
 

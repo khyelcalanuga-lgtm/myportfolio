@@ -27,20 +27,25 @@ const initialMessages = [
   { id: 2, text: 'Feel free to ask me anything or just say hello!', sender: 'bot' },
 ]
 
-const portfolioImages = Object.entries(
+const rawPortfolioImages = Object.entries(
   import.meta.glob('../assets/**/*.{png,webp}', { eager: true, import: 'default' })
 )
   .filter(([path]) => /\/(3dRenderss|graphicdesigns|illustration)\//.test(path))
   .map(([path, src]) => ({ path, src }))
-  .reduce((acc, item) => {
-    const key = item.path.replace(/\.(png|webp)$/i, '')
-    const existing = acc.get(key)
-    if (!existing || item.path.toLowerCase().endsWith('.webp')) {
-      acc.set(key, item)
-    }
-    return acc
-  }, new Map())
-  .values()
+
+const portfolioImages = Array.from(rawPortfolioImages.reduce((acc, item) => {
+  const key = item.path.replace(/\.(png|webp)$/i, '')
+  const existing = acc.get(key)
+  if (!existing || item.path.toLowerCase().endsWith('.webp')) {
+    acc.set(key, item)
+  }
+  return acc
+}, new Map()).values())
+
+const assetMap = new Map(rawPortfolioImages.map((item) => {
+  const basename = item.path.replace(/^.*[\/]/, '')
+  return [basename, item.src]
+}))
 
 const getSuggestedImages = (message) => {
   const text = message.toLowerCase()
@@ -77,14 +82,28 @@ const getSuggestedImages = (message) => {
 
   const selected = scored.filter((item) => item.score > 0)
   const bestMatch = (selected.length ? selected : scored)[0]
-  return bestMatch ? [bestMatch.src] : []
+  if (!bestMatch) return []
+  const basename = bestMatch.img.replace(/^.*[\/]/, '')
+  return [assetMap.get(basename) || bestMatch.img]
 }
+
+const suggestionSets = [
+  ['What are your best pieces?', 'How can I hire you?'],
+  ['Do you have a portfolio to share?', 'What project should I look at first?'],
+  ['I want to see your strongest designs', 'Tell me your top project'],
+  ['What is your favorite project?', 'Recommend a 3D project'],
+  ['A graphic design piece would be helpful', 'What should I look at for UI/UX?'],
+  ['Do you have a website project?', 'What is your most recent work?'],
+  ['A product render example would be great', 'Tell me a portfolio highlight'],
+]
 
 const FloatingContact = () => {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState(initialMessages)
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
+  const [showSuggestions, setShowSuggestions] = useState(true)
+  const [suggestionOptions] = useState(() => suggestionSets[Math.floor(Math.random() * suggestionSets.length)])
   const rootRef = useRef(null)
   const inputRef = useRef(null)
   const bottomRef = useRef(null)
@@ -111,10 +130,11 @@ const FloatingContact = () => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, typing])
 
-  const send = async () => {
-    const text = input.trim()
+  const send = async (textOverride) => {
+    const text = typeof textOverride === 'string' ? textOverride.trim() : input.trim()
     if (!text) return
     setInput('')
+    setShowSuggestions(false)
     setMessages(prev => [...prev, { id: Date.now(), text, sender: 'user' }])
     setTyping(true)
     try {
@@ -126,6 +146,12 @@ const FloatingContact = () => {
       const data = await res.json()
       const images = Array.isArray(data.images) && data.images.length > 0
         ? data.images
+          .map((img) => {
+            if (typeof img !== 'string') return null
+            const basename = img.replace(/^.*[\\/]/, '')
+            return assetMap.get(basename) || null
+          })
+          .filter(Boolean)
         : getSuggestedImages(text)
       setMessages(prev => [...prev, { id: Date.now() + 1, text: data.reply, sender: 'bot', images }])
     } catch {
@@ -166,9 +192,11 @@ const FloatingContact = () => {
                 {msg.sender === 'bot' && <img className="chat-body-avatar" src={avatarImg} alt="" />}
                 <div className="chat-bubble">
                   {msg.text}
-                  {msg.images?.[0] && (
+                  {msg.images?.length > 0 && (
                     <div className="chat-image-grid">
-                      <img className="chat-image" src={msg.images[0]} alt="Portfolio preview" />
+                      {msg.images.map((src, index) => (
+                        <img key={index} className="chat-image" src={src} alt={`Portfolio preview ${index + 1}`} />
+                      ))}
                     </div>
                   )}
                 </div>
@@ -178,6 +206,21 @@ const FloatingContact = () => {
               <div className="chat-msg bot">
                 <img className="chat-body-avatar" src={avatarImg} alt="" />
                 <div className="chat-bubble typing"><span /><span /><span /></div>
+              </div>
+            )}
+            {showSuggestions && (
+              <div className="chat-suggestions">
+                {suggestionOptions.map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    className="chat-suggestion"
+                    onClick={() => send(suggestion)}
+                    disabled={typing}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
               </div>
             )}
             <div ref={bottomRef} />

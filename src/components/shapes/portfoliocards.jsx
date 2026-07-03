@@ -77,7 +77,7 @@ const projects = [
     {
         id: 28,
         title: 'Portfolio Website',
-        category: 'Web/App/UI',
+        category: 'Web/App',
         badge: 'WEBSITE',
         description: 'React · Vite · Personal Project',
         link: 'https://khyelcalanuga.vercel.app/',
@@ -86,7 +86,7 @@ const projects = [
     {
         id: 29,
         title: 'Yorik Studio',
-        category: 'Web/App/UI',
+        category: 'Web/App',
         badge: 'WEBSITE',
         description: 'Agency Website · Freelance',
         link: 'https://yorikstudio.com/',
@@ -95,7 +95,7 @@ const projects = [
     {
         id: 31,
         title: 'MRem',
-        category: 'Web/App/UI',
+        category: 'Web/App',
         badge: 'APP',
         description: 'Android App · Kotlin · Lead Developer',
         image: MRemCover,
@@ -193,7 +193,7 @@ const projects = [
     },
 ]
 
-const allCategories = ['3D Render', 'Web/App/UI', 'Graphic Design', 'Illustration']
+const allCategories = ['3D Render', 'Web/App', 'Graphic Design', 'Illustration']
 
 const Portfoliocards = () => {
     const [activeCategory, setActiveCategory] = useState('3D Render')
