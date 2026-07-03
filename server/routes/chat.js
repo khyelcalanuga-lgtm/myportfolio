@@ -78,49 +78,41 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    // Use Hugging Face Inference API with qwen/qwen3-coder:free
-    const hfToken = process.env.HF_TOKEN
-    if (!hfToken) {
-      console.error('HF_TOKEN not set')
-      return res.status(500).json({ reply: "Server not configured: missing HF_TOKEN." })
+    const apiKey = process.env.OPENROUTER_API_KEY
+    if (!apiKey) {
+      console.error('OPENROUTER_API_KEY not set')
+      return res.status(500).json({ reply: "Server not configured: missing API key." })
     }
 
-    const model = 'qwen/qwen3-coder:free'
-    const url = `https://api-inference.huggingface.co/models/${encodeURIComponent(model)}`
+    const model = process.env.OPENROUTER_MODEL || 'qwen/qwen3-coder:free'
 
-    // Compose a single-text prompt combining the system instructions and the user message
-    const prompt = `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant:`
-
-    const response = await fetch(url, {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${hfToken}`,
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        inputs: prompt,
-        parameters: { max_new_tokens: 500, temperature: 0.3 },
+        model,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: message },
+        ],
+        max_tokens: 500,
+        temperature: 0.3,
       }),
     })
 
     if (!response.ok) {
       const errText = await response.text()
-      console.error('Hugging Face error:', response.status, errText)
+      console.error('OpenRouter error:', response.status, errText)
       return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
     }
 
     const data = await response.json()
-    // Hugging Face text-generation responses commonly return an array with objects containing "generated_text"
-    let reply = null
-    if (Array.isArray(data) && data.length > 0) {
-      reply = data[0].generated_text || (data[0].generated_text && data[0].generated_text.trim())
-    } else if (data.generated_text) {
-      reply = data.generated_text.trim()
-    } else {
-      reply = typeof data === 'string' ? data.trim() : JSON.stringify(data)
-    }
+    const reply = data?.choices?.[0]?.message?.content?.trim() || "I don't have that information yet."
     const images = getSuggestedImages(message)
-    res.json({ reply: reply || "I don't have that information yet.", images })
+    res.json({ reply, images })
   } catch (err) {
     console.error('Chat API error:', err)
     res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
