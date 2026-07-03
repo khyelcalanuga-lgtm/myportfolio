@@ -78,31 +78,47 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    // Use Hugging Face Inference API with qwen/qwen3-coder:free
+    const hfToken = process.env.HF_TOKEN
+    if (!hfToken) {
+      console.error('HF_TOKEN not set')
+      return res.status(500).json({ reply: "Server not configured: missing HF_TOKEN." })
+    }
+
+    const model = 'qwen/qwen3-coder:free'
+    const url = `https://api-inference.huggingface.co/models/${encodeURIComponent(model)}`
+
+    // Compose a single-text prompt combining the system instructions and the user message
+    const prompt = `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant:`
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+        'Authorization': `Bearer ${hfToken}`,
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: message },
-        ],
-        max_tokens: 500,
-        temperature: 0.3,
+        inputs: prompt,
+        parameters: { max_new_tokens: 500, temperature: 0.3 },
       }),
     })
 
     if (!response.ok) {
       const errText = await response.text()
-      console.error('Groq error:', response.status, errText)
+      console.error('Hugging Face error:', response.status, errText)
       return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
     }
 
     const data = await response.json()
-    const reply = data.choices?.[0]?.message?.content?.trim()
+    // Hugging Face text-generation responses commonly return an array with objects containing "generated_text"
+    let reply = null
+    if (Array.isArray(data) && data.length > 0) {
+      reply = data[0].generated_text || (data[0].generated_text && data[0].generated_text.trim())
+    } else if (data.generated_text) {
+      reply = data.generated_text.trim()
+    } else {
+      reply = typeof data === 'string' ? data.trim() : JSON.stringify(data)
+    }
     const images = getSuggestedImages(message)
     res.json({ reply: reply || "I don't have that information yet.", images })
   } catch (err) {
