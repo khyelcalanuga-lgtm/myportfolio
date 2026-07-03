@@ -130,6 +130,30 @@
   font-size: 12px;
   color: #4ade80;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: blink 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .fab-label {
@@ -190,10 +214,38 @@
 
 .chat-msg {
   display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+}
+
+/* Position bot avatar at the bottom-left of the message bubble */
+.chat-msg.bot {
+  /* reserve space on the left for the absolutely positioned avatar */
+  padding-left: 36px;
+  /* avatar width (28) + gap (8) */
+}
+
+.chat-msg.bot .chat-body-avatar {
+  position: absolute;
+  left: 0;
+  /* place avatar aligned with the bottom edge of the bubble */
+  bottom: 4px;
+  margin-top: 0;
+  transform: none;
 }
 
 .chat-msg.user {
   justify-content: flex-end;
+}
+
+.chat-body-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .chat-bubble {
@@ -248,15 +300,27 @@
   animation: typingBounce 1.4s ease-in-out infinite;
 }
 
-.typing span:nth-child(1) { animation-delay: 0s; }
-.typing span:nth-child(2) { animation-delay: 0.2s; }
-.typing span:nth-child(3) { animation-delay: 0.4s; }
+.typing span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes typingBounce {
-  0%, 60%, 100% {
+
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
     opacity: 0.4;
   }
+
   30% {
     transform: translateY(-10px);
     opacity: 1;

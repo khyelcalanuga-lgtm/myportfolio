@@ -141,7 +141,7 @@ const FloatingContact = () => {
             <img className="chat-avatar" src={avatarImg} alt="" />
             <div>
               <div className="chat-head-name">Khyel Calanuga</div>
-              <div className="chat-head-status">Online</div>
+              <div className="chat-head-status"><span className="status-dot" />Online</div>
             </div>
           </div>
           <button className="chat-head-close" onClick={() => setOpen(false)} aria-label="Close chat">
@@ -156,6 +156,7 @@ const FloatingContact = () => {
           <div className="chat-msgs">
             {messages.map(msg => (
               <div key={msg.id} className={`chat-msg ${msg.sender}`}>
+                {msg.sender === 'bot' && <img className="chat-body-avatar" src={avatarImg} alt="" />}
                 <div className="chat-bubble">
                   {msg.text}
                   {msg.images?.[0] && (
@@ -168,6 +169,7 @@ const FloatingContact = () => {
             ))}
             {typing && (
               <div className="chat-msg bot">
+                <img className="chat-body-avatar" src={avatarImg} alt="" />
                 <div className="chat-bubble typing"><span /><span /><span /></div>
               </div>
             )}
