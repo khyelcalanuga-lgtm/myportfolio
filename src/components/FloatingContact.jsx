@@ -129,7 +129,12 @@ const FloatingContact = () => {
         : getSuggestedImages(text)
       setMessages(prev => [...prev, { id: Date.now() + 1, text: data.reply, sender: 'bot', images }])
     } catch {
-      setMessages(prev => [...prev, { id: Date.now() + 1, text: "Sorry, I'm temporarily unavailable.", sender: 'bot' }])
+      // If the chat API is unavailable or rate-limited, provide direct contact info instead
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        text: "I'm currently unavailable to reply here. You can reach me directly at khyelcalanuga@gmail.com or via Instagram @kahyelll — or visit the Contact section on my site to send a message.",
+        sender: 'bot'
+      }])
     } finally {
       setTyping(false)
     }
