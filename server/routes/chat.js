@@ -71,69 +71,42 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const apiKey = process.env.OPENROUTER_API_KEY
+    const apiKey = process.env.NVIDIA_API_KEY
     if (!apiKey) {
-      console.error('OPENROUTER_API_KEY not set')
+      console.error('NVIDIA_API_KEY not set')
       return res.status(500).json({ reply: "Server not configured: missing API key." })
     }
 
-    const models = [
-      process.env.OPENROUTER_MODEL || 'openai/gpt-oss-120b:free',
-      'nousresearch/hermes-3-llama-3.1-405b:free',
-    ]
+    const baseUrl = process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1'
+    const model = process.env.NVIDIA_MODEL || 'qwen/qwen3-next-80b-a3b-instruct'
 
-    const siteUrl = process.env.SITE_URL || 'http://localhost:5173'
+    const response = await fetch(`${baseUrl}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: message },
+        ],
+        max_tokens: 150,
+        temperature: 0.5,
+      }),
+    })
 
-    let lastError = null
-    for (const model of models) {
-      for (let attempt = 0; attempt < 2; attempt++) {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-            'HTTP-Referer': siteUrl,
-            'X-Title': 'Khyel Portfolio Chat',
-          },
-          body: JSON.stringify({
-            model,
-            messages: [
-              { role: 'system', content: SYSTEM_PROMPT },
-              { role: 'user', content: message },
-            ],
-            max_tokens: 150,
-            temperature: 0.5,
-          }),
-        })
-
-        if (response.ok) {
-          const data = await response.json()
-          const reply = data?.choices?.[0]?.message?.content?.trim() || "I don't have that information yet."
-          const images = getSuggestedImages(message)
-          return res.json({ reply, images })
-        }
-
-        lastError = await response.text()
-
-        if (response.status === 429) {
-          let wait = 3
-          try {
-            const errJson = JSON.parse(lastError)
-            wait = (errJson?.error?.metadata?.retry_after_seconds_raw || 3) + 1
-          } catch {}
-          console.error(`Rate limited on ${model}, retrying in ${wait}s...`)
-          await new Promise(r => setTimeout(r, wait * 1000))
-          continue
-        }
-
-        if (response.status === 402 || response.status === 401) {
-          break
-        }
-      }
+    if (!response.ok) {
+      const errText = await response.text()
+      console.error('NVIDIA error:', response.status, errText)
+      return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
     }
 
-    console.error('OpenRouter error:', lastError)
-    return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
+    const data = await response.json()
+    const reply = data?.choices?.[0]?.message?.content?.trim() || "I don't have that information yet."
+    const images = getSuggestedImages(message)
+    res.json({ reply, images })
   } catch (err) {
     console.error('Chat API error:', err)
     res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
