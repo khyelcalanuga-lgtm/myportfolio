@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import './header.css'
 
-const SECTIONS = ['home', 'works', 'About', 'contact']
+const SECTIONS = ['home', 'works', 'about', 'contact']
+const ID_MAP = { home: 'home', works: 'works', about: 'About', contact: 'contact' }
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false)
@@ -19,16 +20,17 @@ const Header = () => {
         const onScroll = () => {
             const mid = window.innerHeight / 2
             let best = null
-            for (const id of SECTIONS) {
+            for (const section of SECTIONS) {
+                const id = ID_MAP[section]
                 const el = document.getElementById(id)
                 if (!el) continue
                 const rect = el.getBoundingClientRect()
                 if (rect.top <= mid && rect.bottom >= mid) {
-                    setActive(id)
+                    setActive(section)
                     return
                 }
                 if (rect.top <= mid && (!best || rect.bottom > best.bottom)) {
-                    best = { id, bottom: rect.bottom }
+                    best = { id: section, bottom: rect.bottom }
                 }
             }
             if (best) setActive(best.id)
@@ -38,12 +40,46 @@ const Header = () => {
         return () => window.removeEventListener('scroll', onScroll)
     }, [])
 
+    // handle back/forward navigation and initial load
+    useEffect(() => {
+        const scrollToPath = (path) => {
+            const section = path && path !== '' ? path.replace(/^\//, '') : 'home'
+            const id = ID_MAP[section] || ID_MAP['home']
+            const el = document.getElementById(id)
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                setActive(section)
+            }
+        }
+
+        // initial
+        scrollToPath(window.location.pathname.replace(/^\//, ''))
+
+        const onPop = () => scrollToPath(window.location.pathname.replace(/^\//, ''))
+        window.addEventListener('popstate', onPop)
+        return () => window.removeEventListener('popstate', onPop)
+    }, [])
+
+    const handleNavClick = (e, section) => {
+        e.preventDefault()
+        const id = ID_MAP[section] || ID_MAP['home']
+        const el = document.getElementById(id)
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+        // update URL (home -> '/')
+        const path = section === 'home' ? '/' : `/${section}`
+        window.history.pushState({}, '', path)
+        setMenuOpen(false)
+        setActive(section)
+    }
+
     const navContent = (
         <ul onClick={(e) => e.stopPropagation()}>
-            <li><a href="#home" className={active === 'home' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Home</a></li>
-            <li><a href="#works" className={active === 'works' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Works</a></li>
-            <li><a href="#About" className={active === 'About' ? 'active' : ''} onClick={() => setMenuOpen(false)}>About</a></li>
-            <li><a href="#contact" className={active === 'contact' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Contact</a></li>
+            <li><a href="/" className={active === 'home' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
+            <li><a href="/works" className={active === 'works' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'works')}>Works</a></li>
+            <li><a href="/about" className={active === 'about' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'about')}>About</a></li>
+            <li><a href="/contact" className={active === 'contact' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'contact')}>Contact</a></li>
         </ul>
     )
 
