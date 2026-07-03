@@ -32,20 +32,21 @@ You can answer any question freely. Use the knowledge below as context about you
 ${knowledge}`
 
   try {
-    const apiKey = process.env.NVIDIA_API_KEY
+    const apiKey = process.env.OPENROUTER_API_KEY
     if (!apiKey) {
-      console.error('NVIDIA_API_KEY not set')
+      console.error('OPENROUTER_API_KEY not set')
       return res.status(500).json({ reply: "Server not configured: missing API key." })
     }
 
-    const baseUrl = process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1'
-    const model = process.env.NVIDIA_MODEL || 'qwen/qwen3-next-80b-a3b-instruct'
+    const model = process.env.OPENROUTER_MODEL || 'qwen/qwen3-8b'
 
-    const response = await fetch(`${baseUrl}/chat/completions`, {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': process.env.SITE_URL || 'http://localhost:5173',
+        'X-Title': 'Khyel Portfolio Chat',
       },
       body: JSON.stringify({
         model,
@@ -60,7 +61,7 @@ ${knowledge}`
 
     if (!response.ok) {
       const errText = await response.text()
-      console.error('NVIDIA error:', response.status, errText)
+      console.error('OpenRouter error:', response.status, errText)
       return res.status(502).json({ reply: "Sorry, I'm temporarily unavailable." })
     }
 
