@@ -37,6 +37,7 @@ import Rndm from '../../assets/illustration/rndm.webp'
 import Rndm3 from '../../assets/illustration/rndm3.webp'
 import Rrrr from '../../assets/illustration/rrrr.webp'
 import MRemCover from '../../assets/Screenshot 2026-07-02 121814.png'
+import MREMM from '../../assets/MREMM.png'
 
 const projects = [
     {
@@ -80,7 +81,7 @@ const projects = [
         category: 'Web/App',
         badge: 'WEBSITE',
         description: 'React · Vite · Personal Project',
-        link: 'https://khyelcalanuga.vercel.app/',
+        link: 'https://khyelcalanuga.dev/',
         image: PortfolioPreview,
     },
     {
@@ -98,7 +99,8 @@ const projects = [
         category: 'Web/App',
         badge: 'APP',
         description: 'Android App · Kotlin · Lead Developer',
-        image: MRemCover,
+        image: MREMM,
+        images: [MRemCover],
     },
     {
         id: 1,
@@ -339,10 +341,10 @@ const Portfoliocards = () => {
                             onClick={() => openLightbox(project)}
                             style={{ cursor: project.image || project.images ? 'pointer' : 'default' }}
                         >
-                            {project.images
-                                ? <img src={project.images[0]} alt={project.title} className="card-img" loading="lazy" />
-                                : project.image && <img src={project.image} alt={project.title} className="card-img" loading="lazy"
+                            {project.image
+                                ? <img src={project.image} alt={project.title} className="card-img" loading="lazy"
                                     style={project.id === 31 ? { objectPosition: 'left' } : undefined} />
+                                : project.images && <img src={project.images[0]} alt={project.title} className="card-img" loading="lazy" />
                             }
                             <span className="card-category-badge">{project.badge || project.category}</span>
                             <div className="card-content">
