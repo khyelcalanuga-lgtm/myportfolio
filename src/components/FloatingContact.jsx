@@ -91,7 +91,9 @@ const FloatingContact = () => {
 
   useEffect(() => {
     if (!open) return
-    inputRef.current?.focus()
+    // Avoid auto-focusing the input on small screens to prevent instantly opening the keyboard
+    const isMobile = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:640px)').matches
+    if (!isMobile) inputRef.current?.focus()
     const close = (e) => {
       if (e.key === 'Escape' || (e.type === 'mousedown' && !rootRef.current?.contains(e.target))) {
         setOpen(false)
