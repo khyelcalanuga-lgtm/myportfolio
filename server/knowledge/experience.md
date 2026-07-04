@@ -1,7 +1,7 @@
 # Experience
 
 ## Freelance Graphic & 3D Designer
-- **Date:** May 2023 - June 2026
+- **Date:** May 2026 - June 2026
 - **Company:** Yorik Production - Remote, Netherlands
 - **Description:** Social media graphics, 3D product renders, branding collaterals
 
