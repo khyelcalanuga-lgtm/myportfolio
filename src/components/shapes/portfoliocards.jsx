@@ -554,7 +554,19 @@ const Portfoliocards = () => {
                                 </div>
                             )}
                             {selectedImage.link && (
-                                <button className="view-website-btn" onClick={() => { setPreviewUrl(selectedImage.link); closeLightbox() }}>
+                                <button className="view-website-btn" onClick={() => {
+                                    closeLightbox()
+                                    try {
+                                        const linkUrl = new URL(selectedImage.link)
+                                        if (linkUrl.origin === window.location.origin) {
+                                            window.scrollTo({ top: 0, behavior: 'smooth' })
+                                        } else {
+                                            setPreviewUrl(selectedImage.link)
+                                        }
+                                    } catch {
+                                        setPreviewUrl(selectedImage.link)
+                                    }
+                                }}>
                                     View Website
                                 </button>
                             )}
