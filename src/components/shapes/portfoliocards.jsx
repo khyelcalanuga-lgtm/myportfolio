@@ -44,35 +44,45 @@ const projects = [
         id: 20,
         title: 'Bugatti',
         category: '3D Render',
-        description: 'Photorealistic · Blender',
+        short: 'Photorealistic · Blender',
+        tech: ['Blender', 'Photoshop'],
+        description: 'A high-fidelity 3D recreation of the Bugatti Chiron, meticulously modeled and rendered in Blender. The project focuses on achieving photorealistic quality through detailed geometry, accurate carbon fiber weave textures, and layered metallic reflections. Multiple lighting setups were used to highlight the car\'s sculpted body lines, from dramatic studio lighting to natural environment HDRIs. The final renders showcase the hypercar from five distinct angles, each emphasizing different aspects of the modeling and material work.',
         images: [Bugatti, Bugatti2, Bugatti3, Bugatti4, Bugatti5],
     },
     {
         id: 22,
         title: "Terre D'Hermes",
         category: '3D Render',
-        description: 'Product Render · Blender',
+        short: 'Product Render · Blender',
+        tech: ['Blender', 'Photoshop'],
+        description: 'A sophisticated product visualization of the iconic Terre d\'Hermès fragrance bottle, crafted entirely in Blender. The render captures the interplay between light and glass through precise refraction and transmission settings, while the gold metal cap and collar were built with realistic anisotropic reflections. The studio lighting setup uses soft key lights and rim lights to define the bottle\'s silhouette and create a premium, editorial aesthetic. Four different compositions explore various angles and environmental contexts for the luxury product.',
         images: [TerreHermes, TerreHermes2, TerreHermes3, TerreHermes4],
     },
     {
         id: 21,
         title: 'Khyel',
         category: '3D Render',
-        description: 'Product Render · Blender',
+        short: 'Product Render · Blender',
+        tech: ['Blender', 'Photoshop'],
+        description: 'A stylized 3D typography project featuring the artist\'s name brought to life with custom beveled letterforms and dramatic lighting in Blender. Each letter was individually modeled with unique extrusions and edge detailing to create a cohesive yet varied visual identity. The surface materials combine brushed metal with subtle wear textures, while the three-point lighting setup creates strong highlights and deep shadows that give the letters a tangible, sculptural presence. The series includes three angled shots that reveal different facets of the typography.',
         images: [Khyel, Khyel2, Khyel3],
     },
     {
         id: 27,
         title: 'Cup',
         category: '3D Render',
-        description: 'Product Render · Blender',
+        short: 'Product Render · Blender',
+        tech: ['Blender', 'Photoshop'],
+        description: 'A minimalist product render of a ceramic cup that demonstrates advanced material techniques in Blender. The cup\'s glazed ceramic surface was built using layered shaders with realistic subsurface scattering that mimics how light penetrates and diffuses through the material. A subtle bump map adds microscopic surface imperfections for tactile realism, while the soft studio lighting creates gentle gradients across the rounded form. Two compositions present the cup from complementary angles, with careful attention to the rim thickness and handle curvature.',
         images: [Cup, Cup2],
     },
     {
         id: 30,
         title: 'Room',
         category: '3D Render',
-        description: 'Interior Render · Blender',
+        short: 'Interior Render · Blender',
+        tech: ['Blender', 'Photoshop'],
+        description: 'A detailed interior architectural visualization rendered in Blender, featuring a thoughtfully designed living space. The scene includes custom-modeled furniture, procedural wall and floor textures, and a realistic lighting setup that simulates natural daylight entering through large windows. Each of the five camera angles explores a different part of the room, from wide establishing shots to intimate detail views of the decor. Post-processing in Blender\'s compositor added subtle color grading and atmospheric depth to enhance the mood.',
         images: [Room, Room2, Room3, Room4, Room5],
     },
     {
@@ -80,7 +90,9 @@ const projects = [
         title: 'Portfolio Website',
         category: 'Web/App',
         badge: 'WEBSITE',
-        description: 'React · Vite · Personal Project',
+        short: 'React · Vite · Personal Project',
+        tech: ['React', 'Vite', 'React Router', 'CSS'],
+        description: 'A personal portfolio website designed and developed from scratch using React and Vite. The site features a clean, minimal dark-themed interface with smooth CSS animations and interactive elements that respond to user input. Built with a component-based architecture, the portfolio showcases projects across multiple categories with a filterable grid, image lightbox, and responsive layouts that adapt seamlessly from desktop to mobile. The design emphasizes typography and whitespace, letting the visual work take center stage.',
         link: 'https://khyelcalanuga.dev/',
         image: PortfolioPreview,
     },
@@ -89,7 +101,9 @@ const projects = [
         title: 'Yorik Studio',
         category: 'Web/App',
         badge: 'WEBSITE',
-        description: 'Agency Website · Freelance',
+        short: 'Agency Website · Freelance',
+        tech: ['HTML', 'CSS', 'JavaScript'],
+        description: 'A professional agency website developed for Yorik Studio, a creative services company. The project involved translating their brand identity into a fully responsive web experience with a bold, modern aesthetic. The site includes service showcases, portfolio sections, client testimonials, and a contact system, all built with clean semantic HTML and CSS. Special attention was given to performance optimization and accessibility, ensuring a fast, inclusive experience across all devices and browsers.',
         link: 'https://yorikstudio.com/',
         image: YorikstudioPreview,
     },
@@ -98,7 +112,9 @@ const projects = [
         title: 'MRem',
         category: 'Web/App',
         badge: 'APP',
-        description: 'Android App · Kotlin · Lead Developer',
+        short: 'Android App · Kotlin · Lead Developer',
+        tech: ['Kotlin', 'Android', 'Material Design'],
+        description: 'A full-featured Android application for managing rental properties and tenant communications, developed as the lead developer using Kotlin. The app follows Material Design guidelines with a clean, intuitive interface that makes property management tasks straightforward. Key features include real-time notifications, interactive dashboards, tenant profile management, and maintenance request tracking. The architecture follows modern Android development best practices with MVVM pattern, Room database for local storage, and Retrofit for API integration.',
         image: MREMM,
         images: [MRemCover],
     },
@@ -106,91 +122,117 @@ const projects = [
         id: 1,
         title: 'Fight Club',
         category: 'Graphic Design',
-        description: 'Poster Design · Photoshop',
+        short: 'Poster Design · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A typographic poster design inspired by the film Fight Club, created in Photoshop using a combination of grunge textures, distressed typography, and dark cinematic imagery. The composition features layered, fragmented text that mirrors the film\'s themes of identity and chaos, with rough brush strokes and ink splatter effects adding raw energy. A muted, desaturated color palette with hints of red and yellow creates a gritty, underground atmosphere. The final design balances aggressive textures with readable typography for maximum visual impact.',
         image: FightClub,
     },
     {
         id: 2,
         title: 'Moon Knight',
         category: 'Graphic Design',
-        description: 'Poster Design · Photoshop',
+        short: 'Poster Design · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A dramatic character poster featuring Moon Knight, built in Photoshop with a focus on chiaroscuro lighting and Egyptian-inspired visual motifs. The composition centers on the character\'s striking white costume against a dark, moody background, with gold crescent details and hieroglyphic textures woven into the design. Multiple layer blending modes and custom brushes were used to create the ethereal glow effects and weathered stone textures. The poster captures the mysterious, supernatural tone of the character through careful color grading and symbolic imagery.',
         image: MoonKnight,
     },
     {
         id: 3,
         title: 'Noah Schnapp Poster',
         category: 'Graphic Design',
-        description: 'Poster Design · Photoshop',
+        short: 'Poster Design · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A cinematic fan poster for Noah Schnapp created in Photoshop, combining advanced portrait retouching with atmospheric color grading. The portrait was carefully masked and layered to create depth, with soft rim lighting defining the subject\'s features against a textured background. The color palette leans into warm, golden tones with teal shadows for a modern film poster aesthetic. Minimalist typography anchors the layout, letting the portrait remain the focal point while maintaining a polished, professional finish.',
         image: NoahSchnappPoster,
     },
     {
         id: 12,
         title: 'Burger 2',
         category: 'Graphic Design',
-        description: 'Food Ad · Photoshop',
+        short: 'Food Ad · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A vibrant food advertisement for a gourmet burger, designed in Photoshop for social media marketing. The composition uses a dynamic diagonal layout with the burger as the hero element, surrounded by scattered ingredients and bold typography. Rich, saturated colors make the beef patty, melted cheese, and fresh vegetables pop against a dark background. Careful food styling techniques were applied in post-processing, including localized contrast adjustments and selective sharpening to enhance textures and create an appetizing, crave-worthy look.',
         image: Burger2,
     },
     {
         id: 14,
         title: 'Burger Combo',
         category: 'Graphic Design',
-        description: 'Food Ad · Photoshop',
+        short: 'Food Ad · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A high-energy combo meal advertisement showcasing a burger and crispy fries, created in Photoshop with a focus on dynamic composition and visual hierarchy. The layout uses an explosive, splash-style background with motion blur effects that convey speed and excitement. The burger and fries are arranged in a balanced diagonal flow that guides the eye across the entire design. Textural details were emphasized through dodge and burn techniques, while the bold typography and vibrant color scheme create an urgent, appetite-stimulating call to action.',
         image: BurgerCombo,
     },
     {
         id: 16,
         title: 'Praf Java Chip',
         category: 'Graphic Design',
-        description: 'Beverage Ad · Photoshop',
+        short: 'Beverage Ad · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A refreshing beverage advertisement for Praf Java Chip frappuccino, designed in Photoshop to evoke cool, indulgent enjoyment. The drink is showcased with glossy condensation beads on the glass, created through custom brush work and layer effects that simulate moisture. Rich coffee browns blend with creamy whites and caramel accents, while ice cube details add authenticity and visual interest. The composition uses a centered, symmetrical layout with soft backlighting that makes the beverage glow, emphasizing its refreshing, treat-like quality.',
         image: PrafJavaChip,
     },
     {
         id: 17,
         title: 'Royal Mismo',
         category: 'Graphic Design',
-        description: 'Beverage Ad · Photoshop',
+        short: 'Beverage Ad · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A luxury beverage advertisement for Royal Mismo, crafted in Photoshop with an elegant, premium aesthetic. The design features refined serif typography, subtle gold foil textures, and sophisticated product placement that positions the drink as a high-end choice. Soft, warm lighting wraps around the bottle, highlighting the liquid\'s rich amber color and the label\'s embossed details. The composition is clean and uncluttered with generous negative space, allowing each element to breathe and convey a sense of exclusivity and craftsmanship.',
         image: RoyalMismo,
     },
     {
         id: 18,
         title: 'Straw Milk',
         category: 'Graphic Design',
-        description: 'Beverage Ad · Photoshop',
+        short: 'Beverage Ad · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A playful, cheerful strawberry milk advertisement designed in Photoshop with a soft, inviting visual style. The composition uses pastel pinks and creamy whites to create a gentle, approachable feel that appeals to a young audience. Fresh strawberries frame the glass bottle, their bright red color providing a natural pop against the soft background. Illustrator-style vector elements and hand-drawn typography add a whimsical, artisanal touch. The lighting is bright and airy, with subtle lens flare effects that suggest freshness and natural ingredients.',
         image: StrawMilk,
     },
     {
         id: 19,
         title: 'Tempura',
         category: 'Graphic Design',
-        description: 'Food Ad · Photoshop',
+        short: 'Food Ad · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A warm, inviting tempura food advertisement created in Photoshop that celebrates Japanese street food culture. The composition centers on a basket of golden-brown tempura shrimp and vegetables, arranged in an organic, appetizing cluster. Warm golden tones and soft, directional lighting emphasize the crispy, crunchy texture of the batter, while a dark wooden tabletop provides contrast. Chopsticks, soy sauce dishes, and subtle Japanese pattern elements complete the authentic presentation, with careful color grading that evokes the cozy atmosphere of a traditional tempura shop.',
         image: Tempura,
     },
     {
         id: 23,
         title: 'Clairo',
         category: 'Illustration',
-        description: 'Digital Art · Photoshop',
+        short: 'Digital Art · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A digital portrait illustration of Clairo created entirely in Photoshop, using a combination of airbrush shading, soft blending, and vibrant color choices. The illustration captures the singer\'s distinctive features through careful proportion study and expressive line work, with particular attention to the eyes and hair flow. A dreamy, ethereal atmosphere is achieved through soft light effects and a pastel-heavy color palette with complementary warm accents. The background uses abstract gradient shapes that echo the musical, free-spirited quality of her artistic style.',
         image: Clairo,
     },
     {
         id: 24,
         title: 'Random 1',
         category: 'Illustration',
-        description: 'Digital Art · Photoshop',
+        short: 'Digital Art · Photoshop',
+        tech: ['Photoshop'],
+        description: 'An expressive, abstract digital illustration created in Photoshop that explores experimental brushwork and bold color theory. The piece combines organic, flowing shapes with sharp geometric accents, creating a dynamic tension between chaos and structure. Custom brushes were developed to achieve unique texture effects, from spray-like splatters to smooth gradient transitions. The vibrant color palette mixes complementary hues with unexpected accent colors, while the layered composition invites the viewer to discover new details with each look.',
         image: Rndm,
     },
     {
         id: 25,
         title: 'Random 2',
         category: 'Illustration',
-        description: 'Digital Art · Photoshop',
+        short: 'Digital Art · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A surreal digital composition in Photoshop that blends organic, fluid forms with precise geometric elements to create visual depth and intrigue. The piece uses multiple blend modes and layer effects to build complex textures that shift between digital and organic qualities. Deep, rich colors anchor the composition while bright accent tones create focal points that guide movement through the piece. The work explores themes of transformation and contrast, with each element carefully positioned to create a balanced yet surprising visual narrative.',
         image: Rndm3,
     },
     {
         id: 26,
         title: 'Sketch',
         category: 'Illustration',
-        description: 'Digital Art · Photoshop',
+        short: 'Digital Art · Photoshop',
+        tech: ['Photoshop'],
+        description: 'A raw, energetic digital sketch created in Photoshop that captures the fundamentals of expressive line work and character design. The piece showcases loose, confident brush strokes that define form through suggestion rather than detailed rendering, emphasizing gesture and movement over precision. The monochrome palette with subtle warm tones keeps the focus on the line quality and compositional structure. This work represents a more spontaneous, instinctive approach to digital art, valuing expression and flow over technical refinement.',
         image: Rrrr,
     },
 ]
@@ -204,6 +246,9 @@ const Portfoliocards = () => {
     const [selectedImage, setSelectedImage] = useState(null)
     const [slideDir, setSlideDir] = useState(null)
     const [previewUrl, setPreviewUrl] = useState(null)
+    const [descExpanded, setDescExpanded] = useState(false)
+    const [descTruncated, setDescTruncated] = useState(false)
+    const descRef = useRef(null)
     const paginationRef = useRef(null)
     const [indicatorStyle, setIndicatorStyle] = useState({ opacity: 0 })
 
@@ -224,20 +269,28 @@ const Portfoliocards = () => {
         return () => window.removeEventListener('keydown', handleKey)
     }, [selectedImage])
 
+    useEffect(() => {
+        if (!selectedImage || !descRef.current || !isMobile) {
+            setDescTruncated(false)
+            return
+        }
+        const el = descRef.current
+        requestAnimationFrame(() => {
+            setDescTruncated(el.scrollHeight > el.clientHeight)
+        })
+    }, [selectedImage, isMobile])
+
     const closePreview = () => setPreviewUrl(null)
 
     const openLightbox = (project) => {
-        if (project.link) {
-            setPreviewUrl(project.link)
-            return
-        }
         const images = project.images || (project.image ? [project.image] : [])
         if (!images.length) return
-        setSelectedImage({ src: images[0], images, index: 0, title: project.title })
+        setSelectedImage({ src: images[0], images, index: 0, title: project.title, description: project.description, category: project.category, badge: project.badge, link: project.link, tech: project.tech })
+        setDescExpanded(false)
     }
 
     const goToPrev = () => {
-        setSlideDir('right')
+        setSlideDir(true)
         setSelectedImage(prev => {
             if (!prev || prev.images.length <= 1) return prev
             const newIndex = prev.index === 0 ? prev.images.length - 1 : prev.index - 1
@@ -246,7 +299,7 @@ const Portfoliocards = () => {
     }
 
     const goToNext = () => {
-        setSlideDir('left')
+        setSlideDir(true)
         setSelectedImage(prev => {
             if (!prev || prev.images.length <= 1) return prev
             const newIndex = prev.index === prev.images.length - 1 ? 0 : prev.index + 1
@@ -349,7 +402,7 @@ const Portfoliocards = () => {
                             <span className="card-category-badge">{project.badge || project.category}</span>
                             <div className="card-content">
                                 <h3 className="card-title">{project.title}</h3>
-                                <p className="card-description">{project.description}</p>
+                                <p className="card-description">{project.short}</p>
                             </div>
                         </div>
                     </div>
@@ -402,13 +455,42 @@ const Portfoliocards = () => {
                         </>
                     )}
                     <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-                        <img
-                            key={selectedImage.index}
-                            src={selectedImage.src}
-                            alt={selectedImage.title}
-                            className={slideDir ? `slide-${slideDir}` : ''}
-                            onAnimationEnd={() => setSlideDir(null)}
-                        />
+                        <div className="lightbox-image-area">
+                            <img
+                                key={selectedImage.index}
+                                src={selectedImage.src}
+                                alt={selectedImage.title}
+                                className={slideDir ? 'fade-in' : ''}
+                                onAnimationEnd={() => setSlideDir(null)}
+                            />
+                        </div>
+                        <div className="lightbox-info">
+                            <span className="lightbox-category-badge">{selectedImage.badge || selectedImage.category}</span>
+                            <h2 className="lightbox-title">{selectedImage.title}</h2>
+                            <p
+                                ref={descRef}
+                                className={`lightbox-desc${descExpanded ? ' expanded' : ''}`}
+                            >
+                                {selectedImage.description}
+                            </p>
+                            {selectedImage.tech && selectedImage.tech.length > 0 && (
+                                <div className="tech-tags">
+                                    {selectedImage.tech.map(t => (
+                                        <span key={t} className="tech-tag">{t}</span>
+                                    ))}
+                                </div>
+                            )}
+                            {isMobile && descTruncated && (
+                                <button className="read-more-btn" onClick={() => setDescExpanded(v => !v)}>
+                                    {descExpanded ? 'Show less' : 'Read more'}
+                                </button>
+                            )}
+                            {selectedImage.link && (
+                                <button className="view-website-btn" onClick={() => { setPreviewUrl(selectedImage.link); setSelectedImage(null) }}>
+                                    View Website
+                                </button>
+                            )}
+                        </div>
                     </div>
                     {selectedImage.images.length > 1 && (
                         <div className="lightbox-counter">{selectedImage.index + 1} / {selectedImage.images.length}</div>
