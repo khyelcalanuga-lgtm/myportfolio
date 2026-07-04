@@ -102,6 +102,7 @@ const FloatingContact = () => {
   const [messages, setMessages] = useState(initialMessages)
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
+  const [cooldown, setCooldown] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(true)
   const [suggestionOptions] = useState(() => suggestionSets[Math.floor(Math.random() * suggestionSets.length)])
   const rootRef = useRef(null)
@@ -132,7 +133,8 @@ const FloatingContact = () => {
 
   const send = async (textOverride) => {
     const text = typeof textOverride === 'string' ? textOverride.trim() : input.trim()
-    if (!text) return
+    if (!text || cooldown) return
+    setCooldown(true)
     setInput('')
     setShowSuggestions(false)
     setMessages(prev => [...prev, { id: Date.now(), text, sender: 'user' }])
@@ -163,6 +165,7 @@ const FloatingContact = () => {
       }])
     } finally {
       setTyping(false)
+      setCooldown(false)
     }
   }
 

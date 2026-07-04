@@ -49,12 +49,15 @@ const contactLinks = [
 
 const ContactSection = () => {
   const [submitted, setSubmitted] = useState(false)
+  const [cooldown, setCooldown] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (cooldown) return
+    setCooldown(true)
     const form = e.target
     const data = new FormData(form)
-    data.append('_captcha', 'false')
+    data.append('_captcha', 'true')
     data.append('_template', 'table')
 
     await fetch('https://formsubmit.co/ajax/khyelcalanuga@gmail.com', {
@@ -64,7 +67,10 @@ const ContactSection = () => {
 
     setSubmitted(true)
     form.reset()
-    setTimeout(() => setSubmitted(false), 4000)
+    setTimeout(() => {
+      setSubmitted(false)
+      setCooldown(false)
+    }, 4000)
   }
 
   return (
