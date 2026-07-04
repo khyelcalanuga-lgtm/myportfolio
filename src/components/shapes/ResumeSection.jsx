@@ -4,7 +4,7 @@ import cv from '../../assets/KhyelCalanugaCV.pdf'
 
 const experienceData = [
     {
-        date: 'May 2022 - June 2026',
+        date: 'May 2023 - June 2026',
         title: 'Freelance Graphic & 3D Designer',
         company: 'Yorik Production - Remote, Netherlands',
         description: 'Social media graphics, 3D product renders, branding collaterals',
