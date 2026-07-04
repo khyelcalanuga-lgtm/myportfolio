@@ -248,6 +248,11 @@ const Portfoliocards = () => {
     const [previewUrl, setPreviewUrl] = useState(null)
     const [descExpanded, setDescExpanded] = useState(false)
     const [descTruncated, setDescTruncated] = useState(false)
+    const [imageFullView, setImageFullView] = useState(false)
+    const [fullViewFade, setFullViewFade] = useState('')
+    const [lightboxClosing, setLightboxClosing] = useState(false)
+    const closeTimerRef = useRef(null)
+    const fadeTimerRef = useRef(null)
     const descRef = useRef(null)
     const paginationRef = useRef(null)
     const [indicatorStyle, setIndicatorStyle] = useState({ opacity: 0 })
@@ -258,10 +263,51 @@ const Portfoliocards = () => {
         return () => window.removeEventListener('resize', check)
     }, [])
 
+    const closeLightbox = () => {
+        if (lightboxClosing || !selectedImage) return
+        if (fadeTimerRef.current) {
+            clearTimeout(fadeTimerRef.current)
+            fadeTimerRef.current = null
+        }
+        setFullViewFade('')
+        setLightboxClosing(true)
+        closeTimerRef.current = setTimeout(() => {
+            setSelectedImage(null)
+            setLightboxClosing(false)
+            setImageFullView(false)
+            closeTimerRef.current = null
+        }, 200)
+    }
+
+    const toggleFullView = () => {
+        if (fullViewFade) return
+        setFullViewFade('fade-out')
+        fadeTimerRef.current = setTimeout(() => {
+            setImageFullView(v => !v)
+            setFullViewFade('fade-in')
+            fadeTimerRef.current = setTimeout(() => {
+                setFullViewFade('')
+                fadeTimerRef.current = null
+            }, 120)
+        }, 120)
+    }
+
+    // clean up timers on unmount
+    useEffect(() => {
+        return () => {
+            if (closeTimerRef.current) {
+                clearTimeout(closeTimerRef.current)
+            }
+            if (fadeTimerRef.current) {
+                clearTimeout(fadeTimerRef.current)
+            }
+        }
+    }, [])
+
     useEffect(() => {
         if (!selectedImage) return
         const handleKey = (e) => {
-            if (e.key === 'Escape') setSelectedImage(null)
+            if (e.key === 'Escape') closeLightbox()
             if (e.key === 'ArrowLeft') goToPrev()
             if (e.key === 'ArrowRight') goToNext()
         }
@@ -274,8 +320,8 @@ const Portfoliocards = () => {
             setDescTruncated(false)
             return
         }
-        const el = descRef.current
         requestAnimationFrame(() => {
+            const el = descRef.current
             setDescTruncated(el.scrollHeight > el.clientHeight)
         })
     }, [selectedImage, isMobile])
@@ -285,6 +331,17 @@ const Portfoliocards = () => {
     const openLightbox = (project) => {
         const images = project.images || (project.image ? [project.image] : [])
         if (!images.length) return
+        if (closeTimerRef.current) {
+            clearTimeout(closeTimerRef.current)
+            closeTimerRef.current = null
+        }
+        if (fadeTimerRef.current) {
+            clearTimeout(fadeTimerRef.current)
+            fadeTimerRef.current = null
+        }
+        setLightboxClosing(false)
+        setFullViewFade('')
+        setImageFullView(false)
         setSelectedImage({ src: images[0], images, index: 0, title: project.title, description: project.description, category: project.category, badge: project.badge, link: project.link, tech: project.tech })
         setDescExpanded(false)
     }
@@ -307,7 +364,7 @@ const Portfoliocards = () => {
         })
     }
 
-    const itemsPerPage = isMobile ? 2 : Infinity
+    const itemsPerPage = isMobile ? 2 : 3
 
     const filteredProjects = activeCategory
         ? projects.filter(p => p.category === activeCategory)
@@ -316,11 +373,9 @@ const Portfoliocards = () => {
     // update indicator position/size based on the active button
     const updateIndicator = () => {
         const root = paginationRef.current
-        if (!root || !isMobile) return
+        if (!root) return
         const active = root.querySelector('.pagination-btn.active')
         if (active) {
-            const rect = active.getBoundingClientRect()
-            const parentRect = root.getBoundingClientRect()
             setIndicatorStyle({
                 opacity: 1,
                 left: `${active.offsetLeft}px`,
@@ -355,13 +410,11 @@ const Portfoliocards = () => {
 
     const totalPages = Math.ceil(filteredProjects.length / itemsPerPage)
     const startIndex = (currentPage - 1) * itemsPerPage
-    const displayedProjects = isMobile
-        ? filteredProjects.slice(startIndex, startIndex + itemsPerPage)
-        : filteredProjects
+    const displayedProjects = filteredProjects.slice(startIndex, startIndex + itemsPerPage)
 
     const goToPage = (page) => setCurrentPage(page)
 
-    const maxVisiblePages = 3
+    const maxVisiblePages = isMobile ? 3 : 5
     const pageNumbers = []
     const half = Math.floor(maxVisiblePages / 2)
     let start = Math.max(1, currentPage - half)
@@ -403,12 +456,12 @@ const Portfoliocards = () => {
                             <div className="card-content">
                                 <h3 className="card-title">{project.title}</h3>
                                 <p className="card-description">{project.short}</p>
-                            </div>
                         </div>
+                    </div>
                     </div>
                 ))}
             </div>
-            {isMobile && totalPages > 1 && (
+            {totalPages > 1 && (
                 <div className="pagination" ref={paginationRef}>
                     <div className="pagination-indicator" style={indicatorStyle} />
                     <button
@@ -437,13 +490,15 @@ const Portfoliocards = () => {
                 </div>
             )}
             {selectedImage && createPortal(
-                <div className="lightbox-overlay" onClick={() => setSelectedImage(null)}>
-                    <button className="lightbox-close" onClick={() => setSelectedImage(null)}>
+                <div className={`lightbox-overlay${imageFullView ? ' full-image-overlay' : ''}${lightboxClosing ? ' closing' : ''}`} onClick={closeLightbox}>
+                    {!imageFullView && (
+                    <button className="lightbox-close" onClick={closeLightbox}>
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
                             <line x1="6" y1="6" x2="26" y2="26" />
                             <line x1="26" y1="6" x2="6" y2="26" />
                         </svg>
                     </button>
+                    )}
                     {selectedImage.images.length > 1 && (
                         <>
                             <button className="lightbox-arrow left" onClick={(e) => { e.stopPropagation(); goToPrev() }}>
@@ -454,8 +509,9 @@ const Portfoliocards = () => {
                             </button>
                         </>
                     )}
-                    <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="lightbox-image-area">
+                    <div className={`lightbox-content${imageFullView ? ' full-image' : ''}${fullViewFade ? ' ' + fullViewFade : ''}${lightboxClosing ? ' closing' : ''}`} onClick={(e) => e.stopPropagation()}>
+                        <div className="lightbox-image-area" onClick={isMobile ? () => toggleFullView() : undefined}>
+                            <div className="image-wrap">
                             <img
                                 key={selectedImage.index}
                                 src={selectedImage.src}
@@ -463,7 +519,19 @@ const Portfoliocards = () => {
                                 className={slideDir ? 'fade-in' : ''}
                                 onAnimationEnd={() => setSlideDir(null)}
                             />
+                            {isMobile && !imageFullView && (
+                                <button className="expand-image-btn">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeLinecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                                </button>
+                            )}
+                            {isMobile && imageFullView && (
+                                <button className="expand-image-btn collapse" onClick={(e) => { e.stopPropagation(); toggleFullView() }}>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeLinecap="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+                                </button>
+                            )}
+                            </div>
                         </div>
+                        {!imageFullView && (
                         <div className="lightbox-info">
                             <span className="lightbox-category-badge">{selectedImage.badge || selectedImage.category}</span>
                             <h2 className="lightbox-title">{selectedImage.title}</h2>
@@ -473,6 +541,11 @@ const Portfoliocards = () => {
                             >
                                 {selectedImage.description}
                             </p>
+                            {isMobile && descTruncated && (
+                                <button className="read-more-btn" onClick={() => setDescExpanded(v => !v)}>
+                                    {descExpanded ? 'Show less' : 'Read more'}
+                                </button>
+                            )}
                             {selectedImage.tech && selectedImage.tech.length > 0 && (
                                 <div className="tech-tags">
                                     {selectedImage.tech.map(t => (
@@ -480,17 +553,13 @@ const Portfoliocards = () => {
                                     ))}
                                 </div>
                             )}
-                            {isMobile && descTruncated && (
-                                <button className="read-more-btn" onClick={() => setDescExpanded(v => !v)}>
-                                    {descExpanded ? 'Show less' : 'Read more'}
-                                </button>
-                            )}
                             {selectedImage.link && (
-                                <button className="view-website-btn" onClick={() => { setPreviewUrl(selectedImage.link); setSelectedImage(null) }}>
+                                <button className="view-website-btn" onClick={() => { setPreviewUrl(selectedImage.link); closeLightbox() }}>
                                     View Website
                                 </button>
                             )}
                         </div>
+                        )}
                     </div>
                     {selectedImage.images.length > 1 && (
                         <div className="lightbox-counter">{selectedImage.index + 1} / {selectedImage.images.length}</div>
