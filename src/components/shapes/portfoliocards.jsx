@@ -30,6 +30,8 @@ import Room2 from '../../assets/3dRenderss/Room2.webp'
 import Room3 from '../../assets/3dRenderss/Room3.webp'
 import Room4 from '../../assets/3dRenderss/Room4.webp'
 import Room5 from '../../assets/3dRenderss/Room5.webp'
+import OneWishWillowColor from '../../assets/3dRenderss/onewishwillowcolor2.png'
+import OneWishWillowClay from '../../assets/3dRenderss/onewishwillowclayrender.png'
 import PortfolioPreview from '../../assets/portfolio-preview.webp'
 import YorikstudioPreview from '../../assets/yorikstudio-preview.webp'
 import Clairo from '../../assets/illustration/clairo.webp'
@@ -59,13 +61,13 @@ const projects = [
         images: [TerreHermes, TerreHermes2, TerreHermes3, TerreHermes4],
     },
     {
-        id: 21,
-        title: 'Khyel',
+        id: 32,
+        title: 'One Wish Willow',
         category: '3D Render',
-        short: 'Product Render · Blender',
+        short: 'Cinematic 3D · Blender',
         tech: ['Blender', 'Photoshop'],
-        description: 'A stylized 3D typography project featuring the artist\'s name brought to life with custom beveled letterforms and dramatic lighting in Blender. Each letter was individually modeled with unique extrusions and edge detailing to create a cohesive yet varied visual identity. The surface materials combine brushed metal with subtle wear textures, while the three-point lighting setup creates strong highlights and deep shadows that give the letters a tangible, sculptural presence. The series includes three angled shots that reveal different facets of the typography.',
-        images: [Khyel, Khyel2, Khyel3],
+        description: 'A cinematic 3D prop render of the triangular "One Wish Willow — Amaze Your Friends!" box from the movie Obsession 2026, recreated in Blender. The model captures the box\'s precise geometric folds and printed typography, set on a wooden bookshelf against a shallow depth-of-field backdrop of book spines. Warm golden lighting and subtle film grain create an intimate, film-like atmosphere, with the two compositions framed with cinematic letterbox bars to evoke a movie still aesthetic.',
+        images: [OneWishWillowColor, OneWishWillowClay],
     },
     {
         id: 27,
@@ -84,6 +86,15 @@ const projects = [
         tech: ['Blender', 'Photoshop'],
         description: 'A detailed interior architectural visualization rendered in Blender, featuring a thoughtfully designed living space. The scene includes custom-modeled furniture, procedural wall and floor textures, and a realistic lighting setup that simulates natural daylight entering through large windows. Each of the five camera angles explores a different part of the room, from wide establishing shots to intimate detail views of the decor. Post-processing in Blender\'s compositor added subtle color grading and atmospheric depth to enhance the mood.',
         images: [Room, Room2, Room3, Room4, Room5],
+    },
+    {
+        id: 21,
+        title: 'Khyel',
+        category: '3D Render',
+        short: 'Product Render · Blender',
+        tech: ['Blender', 'Photoshop'],
+        description: 'A stylized 3D typography project featuring the artist\'s name brought to life with custom beveled letterforms and dramatic lighting in Blender. Each letter was individually modeled with unique extrusions and edge detailing to create a cohesive yet varied visual identity. The surface materials combine brushed metal with subtle wear textures, while the three-point lighting setup creates strong highlights and deep shadows that give the letters a tangible, sculptural presence. The series includes three angled shots that reveal different facets of the typography.',
+        images: [Khyel, Khyel2, Khyel3],
     },
     {
         id: 28,
