@@ -57,7 +57,7 @@ const ResumeSection = () => {
                         </h1>
                         <div className="about-text">
                             <p>
-                                Second-year BSIT student and freelance designer with experience in graphic
+                                Freelance designer with experience in graphic
                                 design, 3D, and app development. Passionate about combining design and
                                 technology to create impactful visuals and applications.
                             </p>
@@ -105,7 +105,6 @@ const ResumeSection = () => {
 
                     <div className="info-card" data-reveal data-reveal-delay="300">
                         <p>
-                            Currently completing a Bachelor of Science in Information Technology.
                             Open to full-time, part-time, and freelance work especially roles
                             that blend design and tech.
                         </p>
