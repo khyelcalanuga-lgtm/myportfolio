@@ -42,8 +42,13 @@ const Header = () => {
 
     // handle back/forward navigation and initial load
     useEffect(() => {
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual'
+        }
+
         const scrollToPath = (path) => {
-            const section = path && path !== '' ? path.replace(/^\//, '') : 'home'
+            const raw = path && path !== '' ? path.replace(/^\//, '') : 'home'
+            const section = raw.toLowerCase()
             const id = ID_MAP[section] || ID_MAP['home']
             const el = document.getElementById(id)
             if (el) {
@@ -62,7 +67,7 @@ const Header = () => {
 
     const handleNavClick = (e, section) => {
         e.preventDefault()
-        const id = ID_MAP[section] || ID_MAP['home']
+        const id = ID_MAP[section.toLowerCase()] || ID_MAP['home']
         const el = document.getElementById(id)
         if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'start' })
