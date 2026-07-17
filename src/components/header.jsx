@@ -90,7 +90,7 @@ const Header = () => {
 
     return (
         <div className="header">
-            <div className="name" data-reveal>
+            <div className="name">
                 <span className="firstname">Khyel.</span>
                 <span className="lastname">Calanuga</span>
             </div>
