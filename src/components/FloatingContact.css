@@ -413,6 +413,35 @@
   .floating-contact.open .morph-panel {
     width: min(90vw, 360px);
     height: min(80vh, 520px);
+    border-radius: 25px;
+  }
+
+  .morph-panel {
+    border-radius: 25px;
+  }
+
+  .chat-head-close {
+    border-radius: 25px;
+  }
+
+  .chat-bubble {
+    border-radius: 25px;
+  }
+
+  .chat-image {
+    border-radius: 25px;
+  }
+
+  .chat-suggestion {
+    border-radius: 25px;
+  }
+
+  .chat-input {
+    border-radius: 25px;
+  }
+
+  .chat-send {
+    border-radius: 25px;
   }
 }
 

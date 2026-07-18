@@ -274,7 +274,7 @@
     padding: 14px 24px;
     width: calc(100% - 48px);
     text-align: center;
-    border-radius: 24px;
+    border-radius: 25px;
   }
 }
 
@@ -318,6 +318,17 @@
     width: 200px;
     height: 60px;
     font-size: 16px;
+    border-radius: 25px;
+  }
+
+  .contact-link {
+    border-radius: 25px;
+  }
+
+  .input-wrapper input,
+  .input-wrapper textarea,
+  .select-wrapper select {
+    border-radius: 25px;
   }
 }
 

@@ -228,7 +228,7 @@
 
     .portfolio-card-wrap {
         aspect-ratio: 1 / 1;
-        border-radius: 50px;
+        border-radius: 25px;
         animation: slideIn 0.35s ease forwards;
     }
 
@@ -238,7 +238,7 @@
 
     .portfolio-card {
         padding: 24px;
-        border-radius: 50px;
+        border-radius: 25px;
     }
 
     .portfolio-filters-row {
@@ -249,9 +249,14 @@
         font-size: 15px;
         height: 36px;
         padding: 0 18px;
+        border-radius: 25px;
     }
 
-.card-category-badge {
+    .card-img {
+        border-radius: 25px;
+    }
+
+    .card-category-badge {
         top: 24px;
         left: 24px;
         height: 28px;
@@ -259,6 +264,7 @@
         padding: 0 16px;
         color: #1C1C1C;
         background: #FBF4D0;
+        border-radius: 25px;
     }
 
     .card-content {
@@ -668,11 +674,17 @@
         font-size: 12px;
         height: 24px;
         padding: 0 14px;
+        border-radius: 25px;
     }
 
     .tech-tag {
         font-size: 11px;
         padding: 3px 10px;
+        border-radius: 25px;
+    }
+
+    .view-website-btn {
+        border-radius: 25px;
     }
 }
 
@@ -705,6 +717,7 @@
         font-size: 12px;
         padding: 4px 12px;
         bottom: 12px;
+        border-radius: 25px;
     }
 
     .lightbox-info {

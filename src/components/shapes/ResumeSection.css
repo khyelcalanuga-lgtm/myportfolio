@@ -211,6 +211,7 @@
         height: 45px;
         font-size: 14px;
         margin-top: 37px;
+        border-radius: 25px;
     }
 
     .skill-tag {
@@ -219,6 +220,7 @@
         padding: 0 18px;
         display: inline-flex;
         align-items: center;
+        border-radius: 25px;
     }
 
     .timeline-date {
@@ -239,6 +241,10 @@
 
     .skill-category-title {
         font-size: 12px;
+    }
+
+    .info-card {
+        border-radius: 25px;
     }
 
     .info-card p {

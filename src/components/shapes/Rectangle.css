@@ -50,7 +50,7 @@
     margin-top: 48px;
     padding: 30px 30px;
     gap: 12px;
-    border-radius: 50px;
+    border-radius: 25px;
   }
 
   .rectangle .section:not(:last-child) {
