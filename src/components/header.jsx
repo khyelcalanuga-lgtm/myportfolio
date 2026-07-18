@@ -57,8 +57,11 @@ const Header = () => {
             }
         }
 
-        // initial
-        scrollToPath(window.location.pathname.replace(/^\//, ''))
+        // initial - only scroll to section if on a specific path (not home)
+        const initialPath = window.location.pathname.replace(/^\//, '')
+        if (initialPath && initialPath !== '' && initialPath.toLowerCase() !== 'home') {
+            scrollToPath(initialPath)
+        }
 
         const onPop = () => scrollToPath(window.location.pathname.replace(/^\//, ''))
         window.addEventListener('popstate', onPop)
