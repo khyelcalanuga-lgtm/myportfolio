@@ -40,6 +40,7 @@ import Rndm3 from '../../assets/illustration/rndm3.webp'
 import Rrrr from '../../assets/illustration/rrrr.webp'
 import MRemCover from '../../assets/Screenshot 2026-07-02 121814.png'
 import MREMM from '../../assets/MREMM.png'
+import EyeSeePreview from '../../assets/eye-see-preview.png'
 
 const projects = [
     {
@@ -48,7 +49,7 @@ const projects = [
         category: '3D Render',
         short: 'Photorealistic · Blender',
         tech: ['Blender', 'Photoshop'],
-        description: 'A high-fidelity 3D recreation of the Bugatti Chiron, meticulously modeled and rendered in Blender. The project focuses on achieving photorealistic quality through detailed geometry, accurate carbon fiber weave textures, and layered metallic reflections. Multiple lighting setups were used to highlight the car\'s sculpted body lines, from dramatic studio lighting to natural environment HDRIs. The final renders showcase the hypercar from five distinct angles, each emphasizing different aspects of the modeling and material work.',
+        description: 'A high-fidelity 3D recreation of the Bugatti Chiron in Blender, focusing on photorealistic quality through detailed geometry, carbon fiber textures, and layered metallic reflections. Multiple lighting setups highlight the car\'s sculpted body lines across five distinct angles.',
         images: [Bugatti, Bugatti2, Bugatti3, Bugatti4, Bugatti5],
     },
     {
@@ -57,7 +58,7 @@ const projects = [
         category: '3D Render',
         short: 'Product Render · Blender',
         tech: ['Blender', 'Photoshop'],
-        description: 'A sophisticated product visualization of the iconic Terre d\'Hermès fragrance bottle, crafted entirely in Blender. The render captures the interplay between light and glass through precise refraction and transmission settings, while the gold metal cap and collar were built with realistic anisotropic reflections. The studio lighting setup uses soft key lights and rim lights to define the bottle\'s silhouette and create a premium, editorial aesthetic. Four different compositions explore various angles and environmental contexts for the luxury product.',
+        description: 'A sophisticated product visualization of the Terre d\'Hermès fragrance bottle in Blender, capturing light and glass interaction through precise refraction and anisotropic reflections. Studio lighting creates a premium editorial aesthetic across four compositions.',
         images: [TerreHermes, TerreHermes2, TerreHermes3, TerreHermes4],
     },
     {
@@ -66,7 +67,7 @@ const projects = [
         category: '3D Render',
         short: 'Cinematic 3D · Blender',
         tech: ['Blender', 'Photoshop'],
-        description: 'A cinematic 3D prop render of the triangular "One Wish Willow — Amaze Your Friends!" box from the movie Obsession 2026, recreated in Blender. The model captures the box\'s precise geometric folds and printed typography, set on a wooden bookshelf against a shallow depth-of-field backdrop of book spines. Warm golden lighting and subtle film grain create an intimate, film-like atmosphere, with the two compositions framed with cinematic letterbox bars to evoke a movie still aesthetic.',
+        description: 'A cinematic 3D prop render of the "One Wish Willow — Amaze Your Friends!" box from Obsession 2026, recreated in Blender with precise geometric folds and printed typography. Warm golden lighting and film grain create an intimate movie still atmosphere.',
         images: [OneWishWillowColor, OneWishWillowClay],
     },
     {
@@ -75,7 +76,7 @@ const projects = [
         category: '3D Render',
         short: 'Product Render · Blender',
         tech: ['Blender', 'Photoshop'],
-        description: 'A minimalist product render of a ceramic cup that demonstrates advanced material techniques in Blender. The cup\'s glazed ceramic surface was built using layered shaders with realistic subsurface scattering that mimics how light penetrates and diffuses through the material. A subtle bump map adds microscopic surface imperfections for tactile realism, while the soft studio lighting creates gentle gradients across the rounded form. Two compositions present the cup from complementary angles, with careful attention to the rim thickness and handle curvature.',
+        description: 'A minimalist product render of a ceramic cup in Blender using layered shaders with subsurface scattering for realistic light diffusion. Soft studio lighting creates gentle gradients across the rounded form in two complementary angles.',
         images: [Cup, Cup2],
     },
     {
@@ -84,7 +85,7 @@ const projects = [
         category: '3D Render',
         short: 'Interior Render · Blender',
         tech: ['Blender', 'Photoshop'],
-        description: 'A detailed interior architectural visualization rendered in Blender, featuring a thoughtfully designed living space. The scene includes custom-modeled furniture, procedural wall and floor textures, and a realistic lighting setup that simulates natural daylight entering through large windows. Each of the five camera angles explores a different part of the room, from wide establishing shots to intimate detail views of the decor. Post-processing in Blender\'s compositor added subtle color grading and atmospheric depth to enhance the mood.',
+        description: 'A detailed interior architectural visualization in Blender featuring custom-modeled furniture, procedural textures, and natural daylight simulation. Five camera angles explore the living space from wide shots to intimate detail views.',
         images: [Room, Room2, Room3, Room4, Room5],
     },
     {
@@ -93,7 +94,7 @@ const projects = [
         category: '3D Render',
         short: 'Product Render · Blender',
         tech: ['Blender', 'Photoshop'],
-        description: 'A stylized 3D typography project featuring the artist\'s name brought to life with custom beveled letterforms and dramatic lighting in Blender. Each letter was individually modeled with unique extrusions and edge detailing to create a cohesive yet varied visual identity. The surface materials combine brushed metal with subtle wear textures, while the three-point lighting setup creates strong highlights and deep shadows that give the letters a tangible, sculptural presence. The series includes three angled shots that reveal different facets of the typography.',
+        description: 'A stylized 3D typography project with custom beveled letterforms and dramatic lighting in Blender. Brushed metal surfaces with three-point lighting create strong highlights and deep shadows across three angled shots.',
         images: [Khyel, Khyel2, Khyel3],
     },
     {
@@ -103,7 +104,7 @@ const projects = [
         badge: 'WEBSITE',
         short: 'React · Vite · Personal Project',
         tech: ['React', 'Vite', 'React Router', 'CSS'],
-        description: 'A personal portfolio website designed and developed from scratch using React and Vite. The site features a clean, minimal dark-themed interface with smooth CSS animations and interactive elements that respond to user input. Built with a component-based architecture, the portfolio showcases projects across multiple categories with a filterable grid, image lightbox, and responsive layouts that adapt seamlessly from desktop to mobile. The design emphasizes typography and whitespace, letting the visual work take center stage.',
+        description: 'A personal portfolio website built with React and Vite featuring a clean dark-themed interface with CSS animations and interactive elements. Includes a filterable project grid, image lightbox, and responsive layouts for all devices.',
         link: 'https://khyelcalanuga.dev/',
         image: PortfolioPreview,
     },
@@ -114,7 +115,7 @@ const projects = [
         badge: 'WEBSITE',
         short: 'Agency Website · Freelance',
         tech: ['HTML', 'CSS', 'JavaScript'],
-        description: 'A professional agency website developed for Yorik Studio, a creative services company. The project involved translating their brand identity into a fully responsive web experience with a bold, modern aesthetic. The site includes service showcases, portfolio sections, client testimonials, and a contact system, all built with clean semantic HTML and CSS. Special attention was given to performance optimization and accessibility, ensuring a fast, inclusive experience across all devices and browsers.',
+        description: 'A professional agency website for Yorik Studio with a bold, modern aesthetic featuring service showcases, portfolio sections, client testimonials, and a contact system. Built with semantic HTML and CSS focused on performance and accessibility.',
         link: 'https://yorikstudio.com/',
         image: YorikstudioPreview,
     },
@@ -125,9 +126,20 @@ const projects = [
         badge: 'APP',
         short: 'Android App · Kotlin · Lead Developer',
         tech: ['Kotlin', 'Android', 'Material Design'],
-        description: 'A full-featured Android application for managing rental properties and tenant communications, developed as the lead developer using Kotlin. The app follows Material Design guidelines with a clean, intuitive interface that makes property management tasks straightforward. Key features include real-time notifications, interactive dashboards, tenant profile management, and maintenance request tracking. The architecture follows modern Android development best practices with MVVM pattern, Room database for local storage, and Retrofit for API integration.',
+        description: 'A full-featured Android medication reminder app built with Kotlin and Material Design. MRem stands for Medication Reminder, featuring real-time notifications, dosage tracking, and medication scheduling using MVVM architecture.',
         image: MREMM,
         images: [MRemCover],
+    },
+    {
+        id: 33,
+        title: 'Eye See',
+        category: 'Web/App',
+        badge: 'WEBSITE',
+        short: 'Website · React · Brand Identity',
+        tech: ['React', 'JavaScript', 'CSS', 'Vercel'],
+        description: 'A clean, modern brand identity website built with React and deployed on Vercel. The site showcases a minimalist design approach with smooth animations, responsive layouts, and a focus on typography and visual hierarchy. Designed to establish a strong online presence with a professional aesthetic.',
+        link: 'https://eye-see-kappa.vercel.app/',
+        image: EyeSeePreview,
     },
     {
         id: 1,
@@ -135,7 +147,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Poster Design · Photoshop',
         tech: ['Photoshop'],
-        description: 'A typographic poster design inspired by the film Fight Club, created in Photoshop using a combination of grunge textures, distressed typography, and dark cinematic imagery. The composition features layered, fragmented text that mirrors the film\'s themes of identity and chaos, with rough brush strokes and ink splatter effects adding raw energy. A muted, desaturated color palette with hints of red and yellow creates a gritty, underground atmosphere. The final design balances aggressive textures with readable typography for maximum visual impact.',
+        description: 'A typographic poster inspired by Fight Club using grunge textures, distressed typography, and dark cinematic imagery in Photoshop. Layered text mirrors themes of identity and chaos with rough brush strokes and ink splatter effects.',
         image: FightClub,
     },
     {
@@ -144,7 +156,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Poster Design · Photoshop',
         tech: ['Photoshop'],
-        description: 'A dramatic character poster featuring Moon Knight, built in Photoshop with a focus on chiaroscuro lighting and Egyptian-inspired visual motifs. The composition centers on the character\'s striking white costume against a dark, moody background, with gold crescent details and hieroglyphic textures woven into the design. Multiple layer blending modes and custom brushes were used to create the ethereal glow effects and weathered stone textures. The poster captures the mysterious, supernatural tone of the character through careful color grading and symbolic imagery.',
+        description: 'A dramatic character poster of Moon Knight with chiaroscuro lighting and Egyptian-inspired motifs in Photoshop. The white costume contrasts against a dark background with gold crescent details and hieroglyphic textures.',
         image: MoonKnight,
     },
     {
@@ -153,7 +165,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Poster Design · Photoshop',
         tech: ['Photoshop'],
-        description: 'A cinematic fan poster for Noah Schnapp created in Photoshop, combining advanced portrait retouching with atmospheric color grading. The portrait was carefully masked and layered to create depth, with soft rim lighting defining the subject\'s features against a textured background. The color palette leans into warm, golden tones with teal shadows for a modern film poster aesthetic. Minimalist typography anchors the layout, letting the portrait remain the focal point while maintaining a polished, professional finish.',
+        description: 'A cinematic fan poster for Noah Schnapp combining advanced portrait retouching with atmospheric color grading in Photoshop. Warm golden tones with teal shadows create a modern film poster aesthetic.',
         image: NoahSchnappPoster,
     },
     {
@@ -162,7 +174,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Food Ad · Photoshop',
         tech: ['Photoshop'],
-        description: 'A vibrant food advertisement for a gourmet burger, designed in Photoshop for social media marketing. The composition uses a dynamic diagonal layout with the burger as the hero element, surrounded by scattered ingredients and bold typography. Rich, saturated colors make the beef patty, melted cheese, and fresh vegetables pop against a dark background. Careful food styling techniques were applied in post-processing, including localized contrast adjustments and selective sharpening to enhance textures and create an appetizing, crave-worthy look.',
+        description: 'A vibrant gourmet burger advertisement for social media using a dynamic diagonal layout with the burger as the hero element. Rich saturated colors make the ingredients pop against a dark background.',
         image: Burger2,
     },
     {
@@ -171,7 +183,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Food Ad · Photoshop',
         tech: ['Photoshop'],
-        description: 'A high-energy combo meal advertisement showcasing a burger and crispy fries, created in Photoshop with a focus on dynamic composition and visual hierarchy. The layout uses an explosive, splash-style background with motion blur effects that convey speed and excitement. The burger and fries are arranged in a balanced diagonal flow that guides the eye across the entire design. Textural details were emphasized through dodge and burn techniques, while the bold typography and vibrant color scheme create an urgent, appetite-stimulating call to action.',
+        description: 'A high-energy combo meal advertisement showcasing a burger and fries with an explosive splash-style background and motion blur effects. Bold typography and vibrant colors create an appetite-stimulating call to action.',
         image: BurgerCombo,
     },
     {
@@ -180,7 +192,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Beverage Ad · Photoshop',
         tech: ['Photoshop'],
-        description: 'A refreshing beverage advertisement for Praf Java Chip frappuccino, designed in Photoshop to evoke cool, indulgent enjoyment. The drink is showcased with glossy condensation beads on the glass, created through custom brush work and layer effects that simulate moisture. Rich coffee browns blend with creamy whites and caramel accents, while ice cube details add authenticity and visual interest. The composition uses a centered, symmetrical layout with soft backlighting that makes the beverage glow, emphasizing its refreshing, treat-like quality.',
+        description: 'A refreshing frappuccino advertisement with glossy condensation beads created through custom brush work and layer effects in Photoshop. Rich coffee browns blend with creamy whites in a centered, symmetrical layout.',
         image: PrafJavaChip,
     },
     {
@@ -189,7 +201,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Beverage Ad · Photoshop',
         tech: ['Photoshop'],
-        description: 'A luxury beverage advertisement for Royal Mismo, crafted in Photoshop with an elegant, premium aesthetic. The design features refined serif typography, subtle gold foil textures, and sophisticated product placement that positions the drink as a high-end choice. Soft, warm lighting wraps around the bottle, highlighting the liquid\'s rich amber color and the label\'s embossed details. The composition is clean and uncluttered with generous negative space, allowing each element to breathe and convey a sense of exclusivity and craftsmanship.',
+        description: 'A luxury beverage advertisement with refined serif typography, gold foil textures, and sophisticated product placement in Photoshop. Soft warm lighting highlights the amber liquid and embossed label details.',
         image: RoyalMismo,
     },
     {
@@ -198,7 +210,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Beverage Ad · Photoshop',
         tech: ['Photoshop'],
-        description: 'A playful, cheerful strawberry milk advertisement designed in Photoshop with a soft, inviting visual style. The composition uses pastel pinks and creamy whites to create a gentle, approachable feel that appeals to a young audience. Fresh strawberries frame the glass bottle, their bright red color providing a natural pop against the soft background. Illustrator-style vector elements and hand-drawn typography add a whimsical, artisanal touch. The lighting is bright and airy, with subtle lens flare effects that suggest freshness and natural ingredients.',
+        description: 'A playful strawberry milk advertisement using pastel pinks and creamy whites with fresh strawberries framing the glass bottle. Illustrator-style vector elements and hand-drawn typography add a whimsical touch.',
         image: StrawMilk,
     },
     {
@@ -207,7 +219,7 @@ const projects = [
         category: 'Graphic Design',
         short: 'Food Ad · Photoshop',
         tech: ['Photoshop'],
-        description: 'A warm, inviting tempura food advertisement created in Photoshop that celebrates Japanese street food culture. The composition centers on a basket of golden-brown tempura shrimp and vegetables, arranged in an organic, appetizing cluster. Warm golden tones and soft, directional lighting emphasize the crispy, crunchy texture of the batter, while a dark wooden tabletop provides contrast. Chopsticks, soy sauce dishes, and subtle Japanese pattern elements complete the authentic presentation, with careful color grading that evokes the cozy atmosphere of a traditional tempura shop.',
+        description: 'A warm tempura advertisement celebrating Japanese street food culture with golden-brown shrimp and vegetables in an organic arrangement. Warm tones and directional lighting emphasize the crispy texture and authentic presentation.',
         image: Tempura,
     },
     {
@@ -216,7 +228,7 @@ const projects = [
         category: 'Illustration',
         short: 'Digital Art · Photoshop',
         tech: ['Photoshop'],
-        description: 'A digital portrait illustration of Clairo created entirely in Photoshop, using a combination of airbrush shading, soft blending, and vibrant color choices. The illustration captures the singer\'s distinctive features through careful proportion study and expressive line work, with particular attention to the eyes and hair flow. A dreamy, ethereal atmosphere is achieved through soft light effects and a pastel-heavy color palette with complementary warm accents. The background uses abstract gradient shapes that echo the musical, free-spirited quality of her artistic style.',
+        description: 'A digital portrait illustration of Clairo using airbrush shading, soft blending, and vibrant colors in Photoshop. A dreamy atmosphere is achieved through soft light effects and a pastel-heavy color palette.',
         image: Clairo,
     },
     {
@@ -225,7 +237,7 @@ const projects = [
         category: 'Illustration',
         short: 'Digital Art · Photoshop',
         tech: ['Photoshop'],
-        description: 'An expressive, abstract digital illustration created in Photoshop that explores experimental brushwork and bold color theory. The piece combines organic, flowing shapes with sharp geometric accents, creating a dynamic tension between chaos and structure. Custom brushes were developed to achieve unique texture effects, from spray-like splatters to smooth gradient transitions. The vibrant color palette mixes complementary hues with unexpected accent colors, while the layered composition invites the viewer to discover new details with each look.',
+        description: 'An expressive abstract digital illustration exploring experimental brushwork and bold color theory in Photoshop. Organic flowing shapes contrast with sharp geometric accents, creating dynamic tension between chaos and structure.',
         image: Rndm,
     },
     {
@@ -234,7 +246,7 @@ const projects = [
         category: 'Illustration',
         short: 'Digital Art · Photoshop',
         tech: ['Photoshop'],
-        description: 'A surreal digital composition in Photoshop that blends organic, fluid forms with precise geometric elements to create visual depth and intrigue. The piece uses multiple blend modes and layer effects to build complex textures that shift between digital and organic qualities. Deep, rich colors anchor the composition while bright accent tones create focal points that guide movement through the piece. The work explores themes of transformation and contrast, with each element carefully positioned to create a balanced yet surprising visual narrative.',
+        description: 'A surreal digital composition blending organic fluid forms with precise geometric elements using multiple blend modes and layer effects. Deep rich colors anchor the composition while bright accents guide the viewer\'s eye.',
         image: Rndm3,
     },
     {
@@ -243,7 +255,7 @@ const projects = [
         category: 'Illustration',
         short: 'Digital Art · Photoshop',
         tech: ['Photoshop'],
-        description: 'A raw, energetic digital sketch created in Photoshop that captures the fundamentals of expressive line work and character design. The piece showcases loose, confident brush strokes that define form through suggestion rather than detailed rendering, emphasizing gesture and movement over precision. The monochrome palette with subtle warm tones keeps the focus on the line quality and compositional structure. This work represents a more spontaneous, instinctive approach to digital art, valuing expression and flow over technical refinement.',
+        description: 'A raw digital sketch capturing expressive line work and character design through loose, confident brush strokes in Photoshop. The monochrome palette with warm tones emphasizes gesture and movement over detailed rendering.',
         image: Rrrr,
     },
 ]
