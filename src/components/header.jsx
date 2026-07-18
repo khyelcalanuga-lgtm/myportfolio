@@ -40,11 +40,18 @@ const Header = () => {
         return () => window.removeEventListener('scroll', onScroll)
     }, [])
 
-    // handle back/forward navigation and initial load
+    // handle back/forward navigation
     useEffect(() => {
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual'
         }
+
+        // force top of page on first load regardless of path
+        window.scrollTo(0, 0)
+
+        // re-scroll after all assets finish loading to fix layout shift issues
+        const onLoad = () => window.scrollTo(0, 0)
+        window.addEventListener('load', onLoad)
 
         const scrollToPath = (path) => {
             const raw = path && path !== '' ? path.replace(/^\//, '') : 'home'
@@ -57,15 +64,12 @@ const Header = () => {
             }
         }
 
-        // initial - only scroll to section if on a specific path (not home)
-        const initialPath = window.location.pathname.replace(/^\//, '')
-        if (initialPath && initialPath !== '' && initialPath.toLowerCase() !== 'home') {
-            scrollToPath(initialPath)
-        }
-
         const onPop = () => scrollToPath(window.location.pathname.replace(/^\//, ''))
         window.addEventListener('popstate', onPop)
-        return () => window.removeEventListener('popstate', onPop)
+        return () => {
+            window.removeEventListener('popstate', onPop)
+            window.removeEventListener('load', onLoad)
+        }
     }, [])
 
     const handleNavClick = (e, section) => {
