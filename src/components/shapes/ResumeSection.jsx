@@ -1,6 +1,6 @@
 import React from 'react'
 import './ResumeSection.css'
-import cv from '../../assets/KhyelCalanugaCV.pdf'
+import cv from '../../assets/KhyelCalanugaCVnode.pdf'
 
 const experienceData = [
     {

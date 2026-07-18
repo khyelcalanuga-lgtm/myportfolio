@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './DownloadCVButton.module.css';
-import cv from '../../assets/KhyelCalanugaCV.pdf'
+import cv from '../../assets/KhyelCalanugaCVnode.pdf'
 
 const DownloadCVButton = () => {
   return (
