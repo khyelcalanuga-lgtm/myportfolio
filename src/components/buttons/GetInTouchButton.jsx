@@ -12,7 +12,7 @@ const GetInTouchButton = () => {
   }
 
   return (
-    <a href="/contact" className={styles.button} onClick={handleClick}>
+    <a href="#" className={styles.button} onClick={handleClick}>
       Get in touch
     </a>
   );

@@ -12,7 +12,7 @@ const ViewMyWorkButton = () => {
   }
 
   return (
-    <a href="/works" className={styles.button} onClick={handleClick}>
+    <a href="#" className={styles.button} onClick={handleClick}>
       View my work
     </a>
   );

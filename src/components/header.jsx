@@ -46,11 +46,16 @@ const Header = () => {
             history.scrollRestoration = 'manual'
         }
 
-        // force top of page on first load regardless of path
-        window.scrollTo(0, 0)
+        // fight scroll restoration aggressively — WebViews often ignore manual mode
+        const scrollToTop = () => window.scrollTo(0, 0)
+        scrollToTop()
+        const t1 = setTimeout(scrollToTop, 150)
+        const t2 = setTimeout(scrollToTop, 400)
 
-        // re-scroll after all assets finish loading to fix layout shift issues
-        const onLoad = () => window.scrollTo(0, 0)
+        const onLoad = () => {
+            scrollToTop()
+            setTimeout(scrollToTop, 50)
+        }
         window.addEventListener('load', onLoad)
 
         const scrollToPath = (path) => {
@@ -64,9 +69,19 @@ const Header = () => {
             }
         }
 
-        const onPop = () => scrollToPath(window.location.pathname.replace(/^\//, ''))
+        // guard: some WebViews fire popstate on initial load
+        let ignoreNextPop = true
+        const onPop = () => {
+            if (ignoreNextPop) {
+                ignoreNextPop = false
+                return
+            }
+            scrollToPath(window.location.pathname)
+        }
         window.addEventListener('popstate', onPop)
         return () => {
+            clearTimeout(t1)
+            clearTimeout(t2)
             window.removeEventListener('popstate', onPop)
             window.removeEventListener('load', onLoad)
         }
@@ -88,10 +103,10 @@ const Header = () => {
 
     const navContent = (
         <ul onClick={(e) => e.stopPropagation()}>
-            <li><a href="/" className={active === 'home' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
-            <li><a href="/works" className={active === 'works' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'works')}>Works</a></li>
-            <li><a href="/about" className={active === 'about' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'about')}>About</a></li>
-            <li><a href="/contact" className={active === 'contact' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'contact')}>Contact</a></li>
+            <li><a href="#" className={active === 'home' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
+            <li><a href="#" className={active === 'works' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'works')}>Works</a></li>
+            <li><a href="#" className={active === 'about' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'about')}>About</a></li>
+            <li><a href="#" className={active === 'contact' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'contact')}>Contact</a></li>
         </ul>
     )
 
