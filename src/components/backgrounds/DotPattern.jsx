@@ -60,7 +60,7 @@ const DotPattern = ({
       const distSq = dx * dx
 
       const wave = Math.sin(x * 0.02 + time) * 0.5 + 0.5
-      let opacity = 0.05
+      let opacity = 0.1
       let r = baseRgb.r
       let g = baseRgb.g
       let b = baseRgb.b
